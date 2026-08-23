@@ -102,7 +102,7 @@ jobs:
       - name: Smoke test API
         run: |
           for i in {1..10}; do
-            if curl --fail http://localhost:8001; then
+            if curl --fail http://localhost:8001/health; then
               exit 0
             fi
             sleep 1
