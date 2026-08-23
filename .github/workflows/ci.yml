@@ -44,3 +44,12 @@ jobs:
           DB_PASSWORD: order_password
         run: |
           python -c "import psycopg; conn = psycopg.connect(host='$DB_HOST', port='$DB_PORT', dbname='$DB_NAME', user='$DB_USER', password='$DB_PASSWORD'); conn.close(); print('Database connection OK')"
+      - name: Run migrations
+        working-directory: backend
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: orders
+          DB_USER: order_user
+          DB_PASSWORD: order_password
+        run: alembic upgrade head
