@@ -8,6 +8,21 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: order_user
+          POSTGRES_PASSWORD: order_password
+          POSTGRES_DB: orders
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U order_user -d orders"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,3 +34,13 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r backend/requirements.txt
+
+      - name: Check database connection
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: orders
+          DB_USER: order_user
+          DB_PASSWORD: order_password
+        run: |
+          python -c "import psycopg; conn = psycopg.connect(host='$DB_HOST', port='$DB_PORT', dbname='$DB_NAME', user='$DB_USER', password='$DB_PASSWORD'); conn.close(); print('Database connection OK')"
