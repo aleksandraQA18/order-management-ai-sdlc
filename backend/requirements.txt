@@ -53,3 +53,4 @@ psycopg[binary]
 SQLAlchemy==2.0.52
 alembic==1.16.5
 pytest==8.4.2
+ruff==0.12.10

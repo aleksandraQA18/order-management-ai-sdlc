@@ -35,6 +35,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r backend/requirements.txt
 
+      - name: Run lint
+        run: ruff check .
+
+      - name: Check formatting
+        run: ruff format --check .
+
       - name: Check database connection
         env:
           DB_HOST: localhost
