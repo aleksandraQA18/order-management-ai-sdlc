@@ -93,6 +93,9 @@ jobs:
       - name: Check containers
         run: docker compose -f compose.staging.yml ps
 
+      - name: Show staging logs
+        run: docker compose -f compose.staging.yml logs
+
       - name: Smoke test API
         run: curl --fail http://localhost:8001
 
