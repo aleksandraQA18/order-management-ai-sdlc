@@ -51,3 +51,4 @@ watchfiles==1.2.0
 websockets==17.0.1
 psycopg[binary]
 SQLAlchemy==2.0.52
+alembic==1.16.5
