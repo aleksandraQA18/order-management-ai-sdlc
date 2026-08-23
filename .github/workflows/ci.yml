@@ -53,3 +53,12 @@ jobs:
           DB_USER: order_user
           DB_PASSWORD: order_password
         run: alembic upgrade head
+
+      - name: Run tests
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: orders
+          DB_USER: order_user
+          DB_PASSWORD: order_password
+        run: pytest -v
