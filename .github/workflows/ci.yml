@@ -69,7 +69,7 @@ jobs:
           DB_PASSWORD: order_password
         run: pytest -v
 
-  staging-build:
+  container-test:
     runs-on: ubuntu-latest
     needs: test
 
