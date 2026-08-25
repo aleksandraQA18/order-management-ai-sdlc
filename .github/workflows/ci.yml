@@ -93,13 +93,10 @@ jobs:
       - name: Check containers
         run: docker compose -f compose.yml ps
 
-      - name: Show container-test logs
-        run: docker compose -f compose.yml logs
-
-      - name: Check API readiness
+      - name: Readiness test
         run: |
           for i in {1..10}; do
-            if curl --fail http://localhost:8001/ready; then
+            if curl --fail http://localhost:8000/ready; then
               exit 0
             fi
             sleep 1
@@ -107,7 +104,11 @@ jobs:
           exit 1
 
       - name: Smoke test API
-        run: curl --fail http://localhost:8001/health
+        run: curl --fail http://localhost:8000/health
+
+      - name: Show container-test logs
+        if: always()
+        run: docker compose -f compose.yml logs
 
       - name: Stop container-test
         if: always()
