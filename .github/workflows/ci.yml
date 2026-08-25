@@ -84,17 +84,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build staging
-        run: docker compose -f compose.staging.yml build
+      - name: Build container-test
+        run: docker compose -f compose.yml build
 
-      - name: Start staging
-        run: docker compose -f compose.staging.yml up -d
+      - name: Start container-test
+        run: docker compose -f compose.yml up -d
 
       - name: Check containers
-        run: docker compose -f compose.staging.yml ps
+        run: docker compose -f compose.yml ps
 
-      - name: Show staging logs
-        run: docker compose -f compose.staging.yml logs
+      - name: Show container-test logs
+        run: docker compose -f compose.yml logs
 
       - name: Check API readiness
         run: |
@@ -109,6 +109,6 @@ jobs:
       - name: Smoke test API
         run: curl --fail http://localhost:8001/health
 
-      - name: Stop staging
+      - name: Stop container-test
         if: always()
-        run: docker compose -f compose.staging.yml down -v
+        run: docker compose -f compose.yml down -v
