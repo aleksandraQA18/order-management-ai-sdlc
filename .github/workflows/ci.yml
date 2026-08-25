@@ -100,7 +100,14 @@ jobs:
         run: docker compose -f compose.staging.yml logs order-api
 
       - name: Check API readiness
-        run: curl --fail http://localhost:8001/ready
+        run: |
+          for i in {1..10}; do
+            if curl --fail http://localhost:8001/ready; then
+              exit 0
+            fi
+            sleep 1
+          done
+          exit 1
 
       - name: Smoke test API
         run: curl --fail http://localhost:8001/health
