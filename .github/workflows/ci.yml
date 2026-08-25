@@ -99,15 +99,11 @@ jobs:
       - name: Show staging logs
         run: docker compose -f compose.staging.yml logs order-api
 
+      - name: Check API readiness
+        run: curl --fail http://localhost:8001/ready
+
       - name: Smoke test API
-        run: |
-          for i in {1..10}; do
-            if curl --fail http://localhost:8001/health; then
-              exit 0
-            fi
-            sleep 1
-          done
-          exit 1
+        run: curl --fail http://localhost:8001/health
 
       - name: Stop staging
         if: always()

@@ -2,6 +2,7 @@ import os
 
 import psycopg
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -22,3 +23,16 @@ def read_root():
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
+
+@app.get("/ready")
+def readiness_check():
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT 1")
+        return {"status": "ready"}
+    except Exception:
+        return JSONResponse(
+            status_code=503,
+            content={"status": "not ready"},
+        )
