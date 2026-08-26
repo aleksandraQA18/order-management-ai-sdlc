@@ -1,0 +1,142 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: order_user
+          POSTGRES_PASSWORD: order_password
+          POSTGRES_DB: orders
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U order_user -d orders"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: pip install -r backend/requirements-dev.txt
+
+      - name: Run lint
+        run: ruff check backend tests
+
+      - name: Check formatting
+        run: ruff format --check backend tests
+
+      - name: Check database connection
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: orders
+          DB_USER: order_user
+          DB_PASSWORD: order_password
+        run: |
+          python -c "import psycopg; conn = psycopg.connect(host='$DB_HOST', port='$DB_PORT', dbname='$DB_NAME', user='$DB_USER', password='$DB_PASSWORD'); conn.close(); print('Database connection OK')"
+      - name: Run migrations
+        working-directory: backend
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: orders
+          DB_USER: order_user
+          DB_PASSWORD: order_password
+        run: alembic upgrade head
+
+      - name: Run tests
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: orders
+          DB_USER: order_user
+          DB_PASSWORD: order_password
+        run: pytest -v
+
+  container-test:
+    runs-on: ubuntu-latest
+    needs: test
+
+    env:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: orders
+      DB_USER: order_user
+      DB_PASSWORD: order_password
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build container-test
+        run: docker compose -f compose.yml build
+
+      - name: Start container-test
+        run: docker compose -f compose.yml up -d
+
+      - name: Check containers
+        run: docker compose -f compose.yml ps
+
+      - name: Readiness test
+        run: |
+          for i in {1..10}; do
+            if curl --fail http://localhost:8000/ready; then
+              exit 0
+            fi
+            sleep 1
+          done
+          exit 1
+
+      - name: Smoke test API
+        run: curl --fail http://localhost:8000/health
+
+      - name: Show container-test logs
+        if: always()
+        run: docker compose -f compose.yml logs
+
+      - name: Stop container-test
+        if: always()
+        run: docker compose -f compose.yml down -v
+
+  publish-image:
+    runs-on: ubuntu-latest
+    needs: container-test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image
+        run: |
+          docker compose -f compose.yml build
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/aleksandraqa18/order-management-ai-sdlc:latest

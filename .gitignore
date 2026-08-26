@@ -1,3 +1,9 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.pytest_cache
+
 # Logs
 logs
 *.log
@@ -141,3 +147,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# ruff cache files
+.ruff_cache/
