@@ -1,5 +1,6 @@
 services:
   order-api:
+    image: ghcr.io/aleksandraqa18/order-management-ai-sdlc
     build:
       context: ./backend
       dockerfile: Dockerfile
