@@ -1,62 +1,87 @@
-# AI SDLC Experiment --- Business Context / BA
+# Product Context — Order Management
 
 ## Product
 
-Order Management MVP.
+E-commerce application for a music store selling musical instruments.
+
+MVP product categories:
+
+- string instruments
+- keyboard instruments
+- wind instruments
+
+## Target Users
+
+Registered customers.
+
+Admin users and administrative functionality are out of scope for the MVP.
+
+Future consideration:
+A separate admin application may be introduced for managing products,
+orders and users.
+
+## Problem
+
+The business currently operates a physical music store and wants to enable
+customers to purchase musical instruments online.
 
 ## Business Goal
 
-Provide a reliable workflow to create, retrieve, transition and cancel
-customer orders.
+Enable the store to sell musical instruments online to registered customers
+through a simple and reliable purchasing process.
 
-## MVP Scope
+## MVP Success
 
--   Customers
--   Products
--   Orders
--   Order items
--   Order totals
--   Order lifecycle
--   REST API
--   Simple web UI for core flows
--   PostgreSQL persistence
--   Automated verification
--   CI execution
+A registered customer can successfully purchase an available musical
+instrument through the website using the test payment flow and receive an
+order confirmation email.
+
+## Scope
+
+### Account
+
+- User registration
+- User login
+
+### Product Discovery
+
+- Product listing
+- Product details
+
+### Shopping
+
+- Add product to cart
+- Cart
+- Checkout
+
+### Order
+
+- Shipping method selection
+- Test payment
+- Order confirmation
+- Confirmation email
+
+### Payment
+
+Payment is simulated for the MVP.
+No real payment provider integration is implemented.
+
+### Shipping
+
+Shipping method selection is supported.
+No real courier/shipping provider integration is implemented.
+
+### Email
+
+A real confirmation email is sent after a successful order.
+
+In the MVP/test environment, email delivery is restricted to whitelisted
+email addresses.
 
 ## Out of Scope
 
-Payments, shipping integration, discounts, notifications, real payment
-providers, advanced reporting, multi-tenancy, production cloud
-infrastructure.
-
-## Business Rules
-
--   BR-01: An order must contain at least one item.
--   BR-02: Quantity must be greater than zero.
--   BR-03: Product must exist.
--   BR-04: Customer must exist.
--   BR-05: Total is calculated server-side.
--   BR-06: New order starts in `CREATED`.
--   BR-07: Lifecycle: `CREATED → CONFIRMED → SHIPPED → COMPLETED`;
-    cancellation is allowed from `CREATED` and `CONFIRMED`; `SHIPPED`,
-    `COMPLETED`, `CANCELLED` are not cancellable.
--   BR-08: Order ID is unique.
--   BR-09: Failed creation must not leave partial data.
-
-## Acceptance Criteria
-
--   AC-01: Valid order is created with `CREATED` status and returned ID.
--   AC-02: Unknown customer is rejected.
--   AC-03: Unknown product is rejected.
--   AC-04: Zero/negative quantity is rejected.
--   AC-05: Empty order is rejected.
--   AC-06: Total is calculated from product prices and quantities.
--   AC-07: Invalid status transitions are rejected.
--   AC-08: Cancellation is allowed only from eligible states.
--   AC-09: Rejected operations do not leave inconsistent data.
-
-## BA Rules
-
-The BA agent owns business intent, business rules, scope, acceptance
-criteria, assumptions and open questions. It must not silently invent
-technical implementation.
+- Real payment provider integration
+- Real courier/shipping provider integration
+- Formal performance/load/stress testing
+- Admin functionality
+- Product/order/user management application
