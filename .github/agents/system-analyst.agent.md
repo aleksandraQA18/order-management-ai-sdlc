@@ -31,6 +31,22 @@ Define WHAT the system must do and WHERE changes are required, without prescribi
 - identify unresolved questions and decisions;
 - provide recommendations when a system or architecture decision requires human input.
 
+## Context
+
+Use the following project context when relevant:
+
+- `docs/context/product.md`
+- `docs/context/architect.md`
+
+Use `product.md` to understand the current product scope and business
+boundaries.
+
+Use `architect.md` to understand the current accepted architecture,
+technical constraints and existing system boundaries.
+
+Do not treat future architectural directions described in the context
+as current system requirements.
+
 ## Skill
 
 Use the `system-analysis` skill for the detailed system analysis method.

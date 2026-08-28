@@ -29,6 +29,16 @@ The canonical Story structure is defined in:
 Agents must process Stories according to this structure and must not
 silently invent missing requirements or decisions.
 
+## Project Context
+
+Canonical project context is maintained under `docs/context/`.
+
+Relevant context documents should be used when performing role-specific
+analysis or implementation.
+
+Agents must distinguish current accepted context from proposed or future
+state described in other documentation.
+
 ## Global Rules
 
 1. Do not invent requirements.

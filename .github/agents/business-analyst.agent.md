@@ -26,6 +26,18 @@ Turn business requirements and human-provided Story inputs into a clear, bounded
 - distinguish facts, inferences and proposals;
 - provide recommendations when a business decision is required.
 
+## Context
+
+Use the following project context when relevant:
+
+- `docs/context/product.md`
+
+The product context provides the current product scope, target users,
+business goal and MVP boundaries.
+
+Do not use it to invent requirements that are not present in the Story
+or approved business decisions.
+
 ## Skill
 
 Use the `requirements-analysis` skill when analyzing or refining business requirements and Acceptance Criteria.
