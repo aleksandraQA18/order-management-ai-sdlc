@@ -98,7 +98,3 @@ In other words, the application is only part of the project.
 This project is helping me explore the intersection of:
 
 **QA Engineering · Software Development · AI Agents · SDLC · Test Automation · CI/CD · Observability · Quality Metrics**
-
-The goal isn't to prove that AI can replace engineers.
-
-It's to find out **how AI can actually become a useful part of an engineering team — and how we can measure whether it really helps.**
