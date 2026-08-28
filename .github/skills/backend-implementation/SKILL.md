@@ -24,12 +24,6 @@ Use:
 
 Treat approved requirements and decisions as the source of backend behavior.
 
-## Skills
-
-- `backend-implementation` — implement approved backend behavior.
-- `backend-testing` — implement backend unit tests.
-- `backend-data-persistence` — implement approved data and persistence changes.
-
 ## Implementation Flow
 
 1. Inspect the relevant existing backend code before changing it.

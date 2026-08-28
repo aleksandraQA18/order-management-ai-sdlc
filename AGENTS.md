@@ -18,6 +18,27 @@ The UI Design Artifact is part of the Story input and must be treated as a sourc
 
 Changes to the approved UI/UX require Human review and approval.
 
+## Backlog
+
+Stories are Human-created work items.
+
+The canonical Story structure is defined in:
+
+`backlog/story-template.md`
+
+Agents must process Stories according to this structure and must not
+silently invent missing requirements or decisions.
+
+## Project Context
+
+Canonical project context is maintained under `docs/context/`.
+
+Relevant context documents should be used when performing role-specific
+analysis or implementation.
+
+Agents must distinguish current accepted context from proposed or future
+state described in other documentation.
+
 ## Global Rules
 
 1. Do not invent requirements.

@@ -49,6 +49,21 @@ Do not use skills mechanically. Select them based on the current Story, system i
 - review implementation and test evidence;
 - provide a quality recommendation.
 
+## Context
+
+Use the following project context when relevant:
+
+- `docs/context/product.md`
+- `docs/context/architect.md`
+
+Use the product context to understand business scope and user-facing risks.
+
+Use the architecture context to identify integration, persistence,
+system-boundary and regression risks.
+
+Do not treat future architectural directions as current implementation
+requirements.
+
 ## Constraints
 
 - Do not invent requirements or expected behavior.
