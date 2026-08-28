@@ -8,6 +8,21 @@ argument-hint: "[Story]"
 
 Use this skill when implementing or updating backend unit tests.
 
+The BE Developer Agent may implement and update backend unit tests.
+
+Tests must:
+
+- verify relevant backend behavior;
+- follow the approved QA Quality Contract;
+- be deterministic and isolated where applicable;
+- contain meaningful assertions;
+- avoid testing implementation details without a justified reason.
+
+Do not create tests only to increase test count.
+
+Do not replace required API, integration, E2E or manual verification with
+backend unit tests.
+
 ## Inputs
 
 Use:

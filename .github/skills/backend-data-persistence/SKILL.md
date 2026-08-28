@@ -8,6 +8,14 @@ argument-hint: "[Story]"
 
 Use this skill when a Story requires backend data-model, schema or persistence changes.
 
+Implement data and persistence changes defined by the approved System Analyst
+analysis.
+
+Do not introduce unrelated schema changes or data-model redesign.
+
+If implementation requires an unexpected database or persistence change,
+stop and request human review.
+
 ## Inputs
 
 Use:

@@ -25,7 +25,7 @@ Before implementation, verify that:
 ```text
 BA: APPROVED
 System Analyst: APPROVED
-QA: APPROVED
+QA Quality Contract: APPROVED
 Blocking questions: NONE
 Required decisions: RESOLVED
 ```
@@ -48,6 +48,12 @@ Use:
 - existing backend/service source code;
 - existing backend tests;
 - repository conventions.
+
+## Skills
+
+- `backend-implementation` — implement approved backend behavior.
+- `backend-testing` — implement backend unit tests.
+- `backend-data-persistence` — implement approved data and persistence changes.
 
 ## Responsibilities
 
@@ -81,69 +87,11 @@ Use:
 
 ## Implementation Map
 
-The Implementation Map is the boundary of backend work.
-
-For example:
-
-| Component      | Required change           | Developer |
-| -------------- | ------------------------- | --------- |
-| `front-app`    | Add registration form     | FE        |
-| `customer-svc` | Add registration endpoint | BE        |
-| `customer-svc` | Add customer persistence  | BE        |
-
-The BE Developer implements only the rows assigned to `BE`.
-
-If implementation reveals that another component or frontend change is
-required:
-
-1. stop the affected implementation;
-2. document the issue as `OPEN`;
-3. explain the impact;
-4. request human review.
-
-Do not modify the Implementation Map or assign work to another developer
-silently.
-
-## API Contracts
-
-Implement the API behavior and contracts approved in the Story and System
-Analyst analysis.
-
-If implementation reveals that the approved API contract is insufficient,
-ambiguous or incompatible with the existing system:
-
-- do not invent a new contract;
-- document the issue as `OPEN`;
-- explain the impact;
-- present reasonable alternatives when useful;
-- request human decision.
+Use the approved Implementation Map as the boundary of backend work.
 
 ## Data and Persistence
 
-Implement data and persistence changes defined by the approved System Analyst
-analysis.
-
-Do not introduce unrelated schema changes or data-model redesign.
-
-If implementation requires an unexpected database or persistence change,
-stop and request human review.
-
-## Tests
-
-The BE Developer Agent may implement and update backend unit tests.
-
-Tests must:
-
-- verify relevant backend behavior;
-- follow the approved QA Quality Contract;
-- be deterministic and isolated where applicable;
-- contain meaningful assertions;
-- avoid testing implementation details without a justified reason.
-
-Do not create tests only to increase test count.
-
-Do not replace required API, integration, E2E or manual verification with
-backend unit tests.
+Use backend-data-persistence for approved data and persistence changes.
 
 ## Workflow
 
@@ -165,20 +113,7 @@ backend unit tests.
 
 ## Traceability
 
-Maintain traceability between:
-
-```text
-Acceptance Criteria
-        ↓
-BE Implementation
-        ↓
-Backend Tests
-        ↓
-Evidence
-```
-
-Every significant deviation from the approved analysis must be explicitly
-recorded.
+Maintain traceability between Acceptance Criteria, BE implementation, backend tests and evidence.
 
 ## Documentation
 
@@ -219,3 +154,17 @@ Do not assign an approval status to your own work.
 
 The BE implementation proceeds to human review after the required evidence
 has been recorded.
+
+## Escalation
+
+Mark an issue as `OPEN` and request human review when:
+
+- the Implementation Map is insufficient or incorrect;
+- the approved API contract is insufficient or incompatible;
+- an unexpected persistence or migration change is required;
+- implementation requires an architectural change;
+- approved scope must change;
+- required decisions are unresolved.
+
+Do not resolve these issues by silently changing the Story,
+Implementation Map, API contract or System Analyst analysis.

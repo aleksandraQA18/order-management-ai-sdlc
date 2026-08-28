@@ -24,6 +24,12 @@ Use:
 
 Treat approved requirements and decisions as the source of backend behavior.
 
+## Skills
+
+- `backend-implementation` — implement approved backend behavior.
+- `backend-testing` — implement backend unit tests.
+- `backend-data-persistence` — implement approved data and persistence changes.
+
 ## Implementation Flow
 
 1. Inspect the relevant existing backend code before changing it.
@@ -72,7 +78,8 @@ Do not silently expand the Story scope or modify the Implementation Map.
 
 ## API Contracts
 
-Implement only approved API behavior and contracts.
+Implement the API behavior and contracts approved in the Story and System
+Analyst analysis.
 
 Verify:
 
@@ -83,12 +90,14 @@ Verify:
 - status codes;
 - relevant error behavior.
 
-If the existing API differs from the approved contract:
+If implementation reveals that the approved API contract is insufficient,
+ambiguous or incompatible with the existing system:
 
 - do not invent a new contract;
-- record the mismatch as `OPEN`;
+- document the issue as `OPEN`;
 - explain the impact;
-- request human review.
+- present reasonable alternatives when useful;
+- request human decision.
 
 Do not use this skill to define API tests. API test implementation remains outside the BE Developer scope.
 
