@@ -2,7 +2,7 @@
 
 ## Story
 
-**As a** [user]
+**As a** [user / actor]
 
 **I want** [capability]
 
@@ -31,27 +31,25 @@
 
 ---
 
-## Architect + System Analyst Analysis
+## System Analyst Analysis
 
 | Area                      | Output                        |
 | ------------------------- | ----------------------------- |
-| Architecture impact       | `NO_CHANGE / CHANGE_REQUIRED` |
 | System behavior / process |                               |
+| Architecture impact       | `NO_CHANGE / CHANGE_REQUIRED` |
 | Data / API impact         |                               |
 | Risks / trade-offs        |                               |
 | Documentation impact      | `NO_CHANGE / UPDATE / NEW`    |
 | Open questions            |                               |
 | Recommendation            |                               |
 
+### Architecture Decision
+
+| Topic | Recommendation | Human Decision |
+| ----- | -------------- | -------------- |
+|       |                | `OPEN`         |
+
 **Status:** `OPEN`
-
----
-
-## Human Decision
-
-| Topic | Recommendation | Decision |
-| ----- | -------------- | -------- |
-|       |                | `OPEN`   |
 
 ---
 
@@ -66,7 +64,24 @@
 | Risks                         |        |
 | Quality gate                  |        |
 
+### QA Quality Contract
+
+| Area                         | Definition |
+| ---------------------------- | ---------- |
+| Required verification        |            |
+| Required automation          |            |
+| Required manual verification |            |
+| Quality gate                 |            |
+
 **Status:** `OPEN`
+
+---
+
+## Human Decisions
+
+| ID   | Topic | Recommendation | Decision | Reason |
+| ---- | ----- | -------------- | -------- | ------ |
+| D-01 |       |                | `OPEN`   |        |
 
 ---
 
