@@ -6,9 +6,9 @@ on:
     types: [opened, synchronize, reopened]
 
 engine:
-  id: codex
+  id: gemini
 
-model: gpt-5.4
+model: gemini-2.5-flash
 
 permissions:
   contents: read
