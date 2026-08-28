@@ -6,9 +6,9 @@ on:
     types: [opened, synchronize, reopened]
 
 engine:
-  id: gemini
+  id: codex
 
-model: gemini-2.5-flash
+model: gpt-5.4
 
 permissions:
   contents: read
@@ -28,6 +28,75 @@ safe-outputs:
 # Dev Reviewer CI
 
 Review the current pull request using the imported Dev Reviewer agent.
+
+## Preconditions
+
+Before reviewing, determine what review context is reliably available.
+
+### Story-aware review
+
+Look for a Story ID in the following order:
+
+1. Pull Request branch name
+2. Pull Request title
+3. Pull Request description
+
+Use Story context only when a Story ID can be identified reliably.
+
+When a valid Story ID is found:
+
+- locate the corresponding Story in the repository;
+- use its Acceptance Criteria, BA analysis, System Analyst analysis, QA analysis, Implementation Map and relevant decisions as review context;
+- verify that the implementation satisfies the stated requirements;
+- identify inconsistencies between the Story, implementation and tests.
+
+For Story-aware review, use the following context where available:
+
+- Story;
+- approved Acceptance Criteria;
+- approved System Analyst analysis;
+- approved Implementation Map;
+- relevant API/data contracts;
+- relevant existing source code;
+- relevant tests;
+- PR diff;
+- available CI/test evidence.
+
+### Code-focused review
+
+If no reliable Story ID is available:
+
+- do not treat the absence of a Story ID as a defect;
+- do not invent business requirements or Acceptance Criteria;
+- review the change based on:
+  - Pull Request description;
+  - changed code;
+  - existing tests;
+  - repository documentation;
+  - engineering principles;
+  - available technical context;
+  - CI/test evidence;
+- focus on correctness, regression risk, maintainability, security, error handling, test coverage and unintended behavior.
+
+### Context integrity
+
+Never invent missing:
+
+- business requirements;
+- Acceptance Criteria;
+- architectural decisions;
+- expected system behavior;
+- dependencies;
+- security requirements.
+
+If important context is missing or contradictory:
+
+- explicitly state the uncertainty;
+- do not silently resolve it through assumptions;
+- review only what can be supported by available evidence;
+- escalate when the missing context prevents a reliable conclusion.
+
+Do not report the absence of a Story ID as a defect unless repository policy explicitly requires a Story for that type of change.
 
 ## Story Identification
 
