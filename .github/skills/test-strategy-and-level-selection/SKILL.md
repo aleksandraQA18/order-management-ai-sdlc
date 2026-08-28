@@ -1,6 +1,6 @@
 ---
 name: test-strategy-and-level-selection
-description: Evaluate whether behaviors are verified at appropriate test levels using risk, feedback speed, stability, scope and the Test Pyramid as a heuristic rather than a rigid rule.
+description: Evaluate whether existing verification uses appropriate test levels based on risk, feedback speed, stability, scope and the Test Pyramid as a heuristic rather than a rigid rule.
 argument-hint: "[Behavior / Test Suite]"
 ---
 
@@ -8,9 +8,11 @@ argument-hint: "[Behavior / Test Suite]"
 
 ## Purpose
 
-Help determine the most appropriate level for verifying a behavior.
+Review whether an existing verification approach uses an appropriate test level for the risk it is intended to control.
 
-The objective is not to maximize lower-level tests.
+This skill is for reviewing test-level decisions already made during QA analysis or implementation.
+
+It does not design the complete test strategy or generate new test cases.
 
 The objective is to obtain reliable confidence at an appropriate cost and feedback speed.
 
@@ -56,6 +58,19 @@ Use for critical user journeys and behavior that genuinely depends on the integr
 
 Do not use E2E simply because it is capable of testing the behavior.
 
+## Review the Existing Decision
+
+For each relevant behavior:
+
+1. Identify the risk being protected.
+2. Identify the current test level.
+3. Determine whether that level provides meaningful confidence.
+4. Check whether lower-level verification already provides equivalent confidence.
+5. Determine whether the current higher-level test adds integration or journey confidence.
+6. Consider feedback speed, stability and failure diagnosis.
+
+Do not redesign the entire suite when the existing decision is adequate.
+
 ## Test Pyramid
 
 Treat the Test Pyramid as a heuristic:
@@ -68,19 +83,7 @@ Do not enforce a fixed numerical ratio.
 
 A critical integration behavior may legitimately require higher-level coverage.
 
-## Selection Questions
-
-For each behavior ask:
-
-1. What risk are we trying to control?
-2. What is the smallest test level that can provide meaningful confidence?
-3. Does a higher-level test provide additional confidence?
-4. Is the higher-level test duplicating lower-level coverage?
-5. What is the expected feedback speed?
-6. How stable is the test at this level?
-7. How easy is failure diagnosis?
-8. Does the behavior depend on real integration?
-9. Is the behavior part of a critical user journey?
+The pyramid is a guide for test economics and risk distribution, not a compliance target.
 
 ## Avoiding Redundancy
 
@@ -98,7 +101,7 @@ Conversely, if several E2E tests repeat the same business rule already thoroughl
 
 ## Testability
 
-Consider whether the chosen level makes the test:
+Consider whether the chosen level makes the existing test:
 
 - deterministic;
 - isolated enough;
@@ -121,11 +124,12 @@ Lower-level tests may be insufficient when the risk specifically concerns integr
 
 ## Review Output
 
-When recommending a different test level, explain:
+When challenging an existing test-level decision, explain:
 
 - current level;
-- recommended level;
+- recommended level, if a change is justified;
 - risk being protected;
+- evidence supporting the recommendation;
 - confidence gained or lost;
 - stability/feedback implications;
 - whether the existing test should remain as additional coverage.

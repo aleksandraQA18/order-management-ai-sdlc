@@ -28,6 +28,20 @@ Use evidence in this order:
 
 Do not invent requirements or expected behavior.
 
+## Existing Evidence Before New Recommendations
+
+Before recommending a new test or additional verification:
+
+1. Check the QA Quality Contract.
+2. Search relevant existing tests.
+3. Check existing coverage and test levels.
+4. Check available CI/test evidence.
+5. Determine whether the existing verification already provides sufficient confidence.
+
+Only recommend additional verification when a meaningful risk remains insufficiently covered.
+
+Do not recommend tests merely because an equivalent test is not located in the most obvious file or because a preferred test pattern is absent.
+
 ## Review Areas
 
 Evaluate:

@@ -1,6 +1,6 @@
 ---
 name: test-quality-and-flakiness
-description: Evaluate automated test reliability, assertions, determinism, isolation, test data, synchronization and failure diagnosability, with explicit handling of flaky-test risk.
+description: Evaluate automated test reliability, assertions, determinism, isolation, test data, synchronization, failure diagnosis and automation anti-patterns, with explicit handling of flaky-test risk.
 argument-hint: "[Test Suite / Test]"
 ---
 
@@ -97,6 +97,25 @@ Prefer:
 
 Avoid large tests that verify many unrelated behaviors and produce ambiguous failures.
 
+## Test Smells and Automation Anti-Patterns
+
+Look for patterns that reduce trust, readability or maintainability, including:
+
+- giant tests covering unrelated behaviors;
+- duplicated setup or assertions without a clear reason;
+- excessive conditional logic inside tests;
+- assertions hidden in generic helpers;
+- brittle selectors or incidental UI coupling;
+- testing implementation details instead of observable behavior;
+- excessive mocking that removes the integration risk being tested;
+- overly generic test utilities that obscure intent;
+- tests coupled through shared fixtures or global state;
+- tests that are difficult to diagnose because failures are ambiguous.
+
+A smell is not automatically a defect.
+
+Report it when it creates a meaningful quality, reliability or maintenance risk.
+
 ## Flakiness Classification
 
 Use three categories:
@@ -142,3 +161,10 @@ When identifying a flaky-test risk, explain:
 3. why CI/environment variation can expose it;
 4. what evidence exists;
 5. what change would make the test more deterministic.
+
+When identifying a test smell, explain:
+
+1. what pattern is present;
+2. why it matters;
+3. whether it is a defect, risk or learning note;
+4. what improvement would address the underlying problem.
