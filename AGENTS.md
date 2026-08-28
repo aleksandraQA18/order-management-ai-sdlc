@@ -8,6 +8,16 @@ AI agents support analysis, reasoning, documentation and implementation.
 
 AI is not the decision maker.
 
+## Human-Owned UI Design
+
+When a Story introduces or changes user-facing UI, the Human must provide an approved UI Design Artifact before BA analysis starts.
+
+Agents must not invent UI/UX behavior when a required UI Design Artifact is missing.
+
+The UI Design Artifact is part of the Story input and must be treated as a source of UI requirements.
+
+Changes to the approved UI/UX require Human review and approval.
+
 ## Global Rules
 
 1. Do not invent requirements.

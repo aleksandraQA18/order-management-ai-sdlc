@@ -6,8 +6,7 @@ argument-hint: "[Story]"
 
 # Requirements Analysis
 
-Use this skill when analyzing or refining business requirements and
-Acceptance Criteria.
+Use this skill when analyzing or refining business requirements and Acceptance Criteria.
 
 ## Analysis Flow
 
@@ -47,17 +46,102 @@ Acceptance Criteria should:
 - be testable;
 - avoid implementation details.
 
-When an Acceptance Criterion is ambiguous or incomplete, identify the
-specific missing information rather than inventing expected behavior.
+When an Acceptance Criterion is ambiguous or incomplete, identify the specific missing information rather than inventing expected behavior.
 
 ## Scope
 
 Explicitly distinguish:
 
-```text
 IN SCOPE:
 ...
 
 OUT OF SCOPE:
 ...
-```
+
+## Business Dependencies
+
+Identify dependencies that affect business behavior or scope.
+
+Consider:
+
+- other business processes;
+- dependent business rules;
+- actors or roles;
+- upstream or downstream business activities;
+- prerequisites.
+
+Do not introduce technical dependencies.
+
+## Ambiguity and Conflicts
+
+Identify:
+
+- missing information;
+- contradictory requirements;
+- unclear terminology;
+- undefined outcomes;
+- unclear ownership or responsibility;
+- assumptions that materially affect behavior.
+
+Do not silently resolve ambiguity or conflicts.
+
+Mark unresolved decisions as:
+
+OPEN
+
+For significant open decisions, provide:
+
+- question;
+- why it matters;
+- reasonable alternatives;
+- recommendation.
+
+## Reasoning Classification
+
+Clearly distinguish:
+
+FACT:
+...
+
+INFERENCE:
+...
+
+PROPOSAL:
+...
+
+DECISION:
+OPEN
+
+Do not present an inference or proposal as an approved business decision.
+
+## Traceability
+
+Maintain traceability:
+
+Business Requirement
+→ Story
+→ Business Rule
+→ Acceptance Criterion
+
+Acceptance Criteria must remain connected to the business requirement they verify.
+
+If an Acceptance Criterion cannot be traced to an approved business requirement, identify the issue rather than inventing justification.
+
+## Boundary
+
+This skill defines:
+
+- how business requirements are analyzed;
+- how business behavior is clarified;
+- how scope and dependencies are identified;
+- how Acceptance Criteria are assessed.
+
+It does not define:
+
+- system architecture;
+- APIs;
+- database structures;
+- implementation details;
+- test implementation.
+
+Those concerns belong to the relevant downstream role.

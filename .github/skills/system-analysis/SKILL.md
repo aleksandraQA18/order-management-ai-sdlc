@@ -6,8 +6,7 @@ argument-hint: "[Story]"
 
 # System Analysis
 
-Use this skill when analyzing system behavior, processes, architecture impact
-and implementation boundaries for the current Story.
+Use this skill when performing system-level analysis for the current Story.
 
 ## Analysis Flow
 
@@ -36,9 +35,9 @@ Base the analysis on available evidence:
 - existing APIs;
 - existing tests.
 
-Clearly distinguish the current implementation from intended future behavior.
+Use the evidence to distinguish current implementation from intended future behavior.
 
-Use the following classification:
+Clearly distinguish:
 
 FACT:
 ...
@@ -52,14 +51,15 @@ PROPOSAL:
 DECISION:
 OPEN
 
-Do not assume that existing implementation is automatically the desired
-behavior.
+Do not assume that existing implementation is automatically the desired behavior.
+
+If implementation contradicts approved business requirements, identify the discrepancy and mark the required decision as `OPEN`.
 
 ## System Behavior
 
-Describe:
+Describe the relevant system behavior, including:
 
-- relevant system flow;
+- system flow;
 - affected behavior;
 - inputs and outputs;
 - state changes;
@@ -67,33 +67,48 @@ Describe:
 - error behavior;
 - relevant dependencies.
 
-Focus on system behavior rather than implementation details.
+Focus on observable system behavior and responsibilities rather than code-level implementation.
 
 ## Components
 
-Identify all application components affected by the Story.
+Identify application components affected by the Story.
 
 For each component determine:
 
 - why it is affected;
 - what behavior must change;
+- assess how the approved UI behavior maps to affected system components and APIs.
 - whether the change is required or optional.
 
 Do not include components based only on speculation.
 
+Where possible, identify the responsible implementation area, such as:
+
+- frontend application;
+- backend service;
+- API;
+- persistence component;
+- integration;
+- shared component.
+
 ## Implementation Map
 
-Create an Implementation Map for the affected components.
+Create an Implementation Map that gives FE and BE Developers a clear implementation boundary.
 
-Use the following structure:
+Use:
 
 | Component | Required change | Developer | Dependencies |
-|---|---|---|---|
-| | | `FE / BE` | |
+| --------- | --------------- | --------- | ------------ |
+|           |                 | `FE / BE` |              |
 
-The map defines what needs to change and where.
+The map must answer:
 
-It must not prescribe:
+- WHAT needs to change;
+- WHERE it changes;
+- WHICH developer is responsible;
+- WHAT dependencies affect the implementation.
+
+The map must not prescribe:
 
 - classes;
 - functions;
@@ -101,26 +116,28 @@ It must not prescribe:
 - framework-specific implementation;
 - detailed algorithms.
 
-Those decisions belong to the relevant Developer unless explicitly defined
-by an approved requirement or decision.
+Those decisions belong to the relevant Developer unless explicitly defined by an approved requirement or decision.
+
+If the affected component or responsible developer cannot be determined from available evidence, mark it as `OPEN`.
 
 ## Dependencies
 
 Identify dependencies between affected components.
 
-Examples include:
+Consider:
 
 - API contracts;
 - data dependencies;
 - service dependencies;
 - frontend/backend dependencies;
-- ordering constraints.
+- ordering constraints;
+- shared components.
 
 Only document dependencies supported by the analysis.
 
 ## API and Data Impact
 
-Identify relevant changes to:
+Identify relevant impact on:
 
 - API behavior;
 - request/response data;
@@ -128,6 +145,8 @@ Identify relevant changes to:
 - persistence;
 - data relationships;
 - state transitions.
+
+Distinguish required changes from assumptions.
 
 Do not invent API or data behavior that is not required.
 
@@ -143,11 +162,11 @@ CHANGE_REQUIRED
 
 OPEN
 
-When a change is required, describe:
+When architectural change is required, describe:
 
 - affected components;
 - proposed direction;
-- alternatives;
+- reasonable alternatives;
 - risks;
 - trade-offs.
 
@@ -164,12 +183,13 @@ If the Story affects an existing process:
 3. identify affected components;
 4. identify documentation impact.
 
-Do not create or update process documentation to represent an unapproved
-decision.
+Documentation must describe approved behavior.
+
+Do not create or update process documentation to represent an unapproved decision.
 
 ## Risks and Trade-offs
 
-Identify relevant technical and system-level risks.
+Identify relevant system-level risks and constraints.
 
 Consider:
 
@@ -179,13 +199,14 @@ Consider:
 - backward compatibility;
 - scalability;
 - maintainability;
-- operational impact.
+- operational impact;
+- impact on existing consumers.
 
 Do not turn hypothetical concerns into requirements.
 
 ## Open Questions
 
-Mark missing information as:
+Mark missing or ambiguous information as:
 
 OPEN
 
@@ -209,6 +230,10 @@ WHERE it changes
 WHAT the system must do
 
 WHAT is affected
+
+WHAT dependencies matter
+
+WHAT architectural impact exists
 
 It does not define:
 

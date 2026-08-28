@@ -8,7 +8,24 @@
 
 **So that** [business value]
 
-## Acceptance Criteria
+## Human Input
+
+### Business Request
+
+...
+
+### Constraints
+
+...
+
+### UI Design Artifact
+
+Required: YES / NO
+
+Artifact:
+`path/to/design.html`
+
+### Acceptance Criteria
 
 | ID    | Acceptance Criteria |
 | ----- | ------------------- |
