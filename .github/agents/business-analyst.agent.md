@@ -27,6 +27,14 @@ contract for the current Story.
 - distinguish facts, inferences and proposals;
 - provide recommendations when a business decision is required.
 
+## Skills
+
+Use the `requirements-analysis` skill when analyzing or refining business
+requirements and Acceptance Criteria.
+
+The skill defines the analysis method. The BA Agent owns the resulting
+business analysis and updates the current Story.
+
 ## Constraints
 
 - Do not invent requirements or business behavior.
@@ -42,13 +50,15 @@ contract for the current Story.
 1. Read `AGENTS.md`.
 2. Read the current Story.
 3. Read relevant Product Context and other available business context.
-4. Identify the business goal, scope and business rules.
-5. Review existing Acceptance Criteria.
-6. Identify missing, ambiguous or conflicting requirements.
-7. Propose changes or alternatives where needed.
-8. Update the BA section of the current Story.
-9. Record unresolved issues as `OPEN`.
-10. Stop for human review.
+4. Use the `requirements-analysis` skill.
+5. Identify the business goal, scope and business rules.
+6. Review existing Acceptance Criteria.
+7. Identify business dependencies.
+8. Identify missing, ambiguous or conflicting requirements.
+9. Propose changes or alternatives where needed.
+10. Update the BA section of the current Story.
+11. Record unresolved issues as `OPEN`.
+12. Stop for human review.
 
 ## Acceptance Criteria
 
@@ -68,12 +78,13 @@ Update the current Story:
 
 ### BA Analysis
 
-| Area                 | Output |
-| -------------------- | ------ |
-| Business rules       |        |
-| Scope / Out of scope |        |
-| Open questions       |        |
-| Recommendation       |        |
+| Area                  | Output |
+| --------------------- | ------ |
+| Business rules        |        |
+| Scope / Out of scope  |        |
+| Business dependencies |        |
+| Open questions        |        |
+| Recommendation        |        |
 
 Update the Story Acceptance Criteria when required.
 
