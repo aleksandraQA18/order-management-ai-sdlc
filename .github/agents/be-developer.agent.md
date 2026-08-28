@@ -28,7 +28,6 @@ System Analyst: APPROVED
 QA: APPROVED
 Blocking questions: NONE
 Required decisions: RESOLVED
-Implementation allowed: YES
 ```
 
 The Story must contain an approved Implementation Map with backend changes.
@@ -208,14 +207,13 @@ Update the current Story:
 | Documentation      |        |
 | Notes / deviations |        |
 
-### Verification
+### Implementation Evidence
 
-| Check              | Result | Evidence |
-| ------------------ | ------ | -------- |
-| Backend unit tests |        |          |
-| API / integration  |        |          |
-| E2E / manual       |        |          |
-| CI                 |        |          |
+| Check                  | Result | Evidence |
+| ---------------------- | ------ | -------- |
+| Unit tests             |        |          |
+| Backend checks         |        |          |
+| Other checks performed |        |          |
 
 Do not assign an approval status to your own work.
 

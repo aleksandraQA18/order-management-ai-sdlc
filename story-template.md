@@ -27,21 +27,26 @@
 | Open questions       |        |
 | Recommendation       |        |
 
-**Status:** `OPEN`
-
 ---
 
 ## System Analyst Analysis
 
-| Area                      | Output                        |
-| ------------------------- | ----------------------------- |
-| System behavior / process |                               |
-| Architecture impact       | `NO_CHANGE / CHANGE_REQUIRED` |
-| Data / API impact         |                               |
-| Risks / trade-offs        |                               |
-| Documentation impact      | `NO_CHANGE / UPDATE / NEW`    |
-| Open questions            |                               |
-| Recommendation            |                               |
+| Area                      | Output                                       |
+| ------------------------- | -------------------------------------------- |
+| System behavior / process |                                              |
+| Components affected       |                                              |
+| Architecture impact       | `NO_CHANGE / CHANGE_REQUIRED`                |
+| Data / API impact         |                                              |
+| Risks / trade-offs        |                                              |
+| Documentation impact      | `NO_CHANGE / UPDATE_EXISTING / NEW_DOCUMENT` |
+| Open questions            |                                              |
+| Recommendation            |                                              |
+
+### Implementation Map
+
+| Component | Required change | Developer | Dependencies |
+| --------- | --------------- | --------- | ------------ |
+|           |                 | `FE / BE` |              |
 
 ### Architecture Decision
 
@@ -49,19 +54,20 @@
 | ----- | -------------- | -------------- |
 |       |                | `OPEN`         |
 
-**Status:** `OPEN`
-
 ---
 
 ## QA Analysis
 
 | Area                          | Output |
 | ----------------------------- | ------ |
+| Critical behavior             |        |
+| Risks                         |        |
+| Verification targets          |        |
 | Test scenarios                |        |
 | Negative / boundary scenarios |        |
 | Test level                    |        |
 | Automation                    |        |
-| Risks                         |        |
+| Regression impact             |        |
 | Quality gate                  |        |
 
 ### QA Quality Contract
@@ -72,8 +78,6 @@
 | Required automation          |            |
 | Required manual verification |            |
 | Quality gate                 |            |
-
-**Status:** `OPEN`
 
 ---
 
@@ -87,22 +91,56 @@
 
 ## Implementation
 
+### FE
+
+| Area                   | Output |
+| ---------------------- | ------ |
+| Changes                |        |
+| Unit / component tests |        |
+| Documentation          |        |
+| Notes / deviations     |        |
+
+### BE
+
 | Area               | Output |
 | ------------------ | ------ |
 | Changes            |        |
-| Tests              |        |
+| Unit tests         |        |
 | Documentation      |        |
 | Notes / deviations |        |
 
 ---
 
+## Implementation Evidence
+
+| Check                     | Result | Evidence |
+| ------------------------- | ------ | -------- |
+| FE unit / component tests |        |          |
+| BE unit tests             |        |          |
+| Build / static checks     |        |          |
+| Other checks              |        |          |
+
+---
+
 ## Verification
 
-| Check             | Result | Evidence |
+| Verification      | Result | Evidence |
 | ----------------- | ------ | -------- |
-| Automated tests   |        |          |
 | API / integration |        |          |
-| E2E / manual      |        |          |
+| E2E               |        |          |
+| Manual            |        |          |
 | CI                |        |          |
+
+---
+
+## Final Review
+
+| Area                | Result | Notes |
+| ------------------- | ------ | ----- |
+| Acceptance Criteria |        |       |
+| QA Quality Contract |        |       |
+| Implementation      |        |       |
+| Verification        |        |       |
+| Documentation       |        |       |
 
 **Final status:** `OPEN`
