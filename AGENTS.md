@@ -1,9 +1,25 @@
-# AI SDLC Agent System — Order Management
+# AI-SDLC Agent Contract
 
 ## Purpose
-Operating model for the Order Management AI SDLC experiment.
+
+Operating rules for the AI-SDLC workflow used in this repository.
+
+AI agents support analysis, reasoning, documentation and implementation.
+
+AI is not the decision maker.
+
+## Human-Owned UI Design
+
+When a Story introduces or changes user-facing UI, the Human must provide an approved UI Design Artifact before BA analysis starts.
+
+Agents must not invent UI/UX behavior when a required UI Design Artifact is missing.
+
+The UI Design Artifact is part of the Story input and must be treated as a source of UI requirements.
+
+Changes to the approved UI/UX require Human review and approval.
 
 ## Global Rules
+
 1. Do not invent requirements.
 2. Missing information is `OPEN`.
 3. Do not silently resolve conflicts.
@@ -20,42 +36,78 @@ Operating model for the Order Management AI SDLC experiment.
 14. Do not change business behavior without updating the relevant specification.
 15. Do not hide failures by weakening assertions or using unlimited retries.
 16. AI output is reviewed when it affects behavior, architecture, security, or quality gates.
+17. Do not silently change an approved API, data, system or business contract.
+18. If implementation reveals information that affects an approved decision, stop and request human review.
 
 ## Agent Ownership
-| Agent | Ownership |
-|---|---|
-| BA | business intent and acceptance criteria |
-| Architect | architecture and constraints |
-| System Analyst | system behavior and technical specification |
-| QA | risks, verification strategy, quality contract |
-| Developer | implementation and implementation-level tests |
-| DevOps | delivery infrastructure and CI/CD |
 
-## Human Approval
-Required for conflicting requirements, blocking questions, material architecture changes, significant security risk, quality-gate exceptions, business-behavior changes, or uncertain release readiness.
+| Agent            | Ownership                                                                             |
+| ---------------- | ------------------------------------------------------------------------------------- |
+| Business Analyst | business intent and acceptance criteria                                               |
+| System Analyst   | system behavior, technical specification, architectural impact and Implementation Map |
+| QA               | risks, verification strategy and QA Quality Contract                                  |
+| FE Developer     | frontend implementation and frontend unit/component tests                             |
+| BE Developer     | backend/service implementation and backend unit tests                                 |
 
-## Context Discipline
-Normally provide an agent only:
-- this `AGENTS.md`,
-- current Story,
-- relevant business context,
-- relevant architecture/system context,
-- QA Quality Contract when applicable.
+Agents may identify issues outside their ownership, but must not make decisions
+belonging to another role.
 
-## Status Model
-`BACKLOG → READY → IN_ANALYSIS → READY_FOR_DEVELOPMENT → IN_DEVELOPMENT → READY_FOR_REVIEW → QA_REVIEW → READY_FOR_MERGE → DONE`
+## Human-in-the-Loop
 
-Any stage may become `BLOCKED`.
+The human is the final decision maker.
 
-## Handoff
-Every handoff contains:
-- Story ID
-- status
-- completed work
-- decisions
-- open questions
-- artifacts
-- next action
+Agents may:
 
-## AI Experiment Log
-For important Stories record what AI generated, what was accepted/changed, what AI got wrong, what caught the problem, and which guardrail was added if needed.
+- analyze;
+- challenge assumptions;
+- identify risks;
+- identify ambiguities and conflicts;
+- propose solutions;
+- present alternatives;
+- recommend an option.
+
+Agents must not independently approve decisions.
+
+Every major agent analysis requires human review before the Story proceeds to
+the next stage.
+
+Human approval is required for decisions affecting:
+
+- product scope;
+- business behavior;
+- architecture;
+- system behavior;
+- API or data contracts;
+- security;
+- quality gates;
+- significant implementation decisions.
+
+Recommendation does not constitute approval.
+
+## Agent Workflow
+
+The default workflow is:
+
+```text
+Business Requirements
+        ↓
+Business Analyst
+        ↓
+Human Review
+        ↓
+System Analyst
+        ↓
+Human Review
+        ↓
+QA
+        ↓
+Human Review
+        ↓
+Implementation
+   ┌────┴────┐
+   ↓         ↓
+FE Developer  BE Developer
+   └────┬────┘
+        ↓
+Human Review
+```
