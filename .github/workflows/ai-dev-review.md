@@ -2,8 +2,9 @@
 name: AI Dev Reviewer
 description: Minimal, high-confidence code review focused on concrete defects in changed code.
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
 
 engine:
   id: gemini
