@@ -1,8 +1,10 @@
 name: CI
 
 on:
-  push:
   pull_request:
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -54,6 +56,7 @@ jobs:
           DB_PASSWORD: order_password
         run: |
           python -c "import psycopg; conn = psycopg.connect(host='$DB_HOST', port='$DB_PORT', dbname='$DB_NAME', user='$DB_USER', password='$DB_PASSWORD'); conn.close(); print('Database connection OK')"
+
       - name: Run migrations
         working-directory: backend
         env:
@@ -117,26 +120,3 @@ jobs:
       - name: Stop container-test
         if: always()
         run: docker compose -f compose.yml down -v
-
-  publish-image:
-    runs-on: ubuntu-latest
-    needs: container-test
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build image
-        run: |
-          docker compose -f compose.yml build
-
-      - name: Push image
-        run: |
-          docker push ghcr.io/aleksandraqa18/order-management-ai-sdlc:latest
