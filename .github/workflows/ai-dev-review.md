@@ -15,6 +15,8 @@ permissions:
   pull-requests: read
 
 safe-outputs:
+  report-failure-as-issue:
+    - "!ai_credits_rate_limit_error"
   submit-pull-request-review:
     max: 1
     allowed-events: [COMMENT]
