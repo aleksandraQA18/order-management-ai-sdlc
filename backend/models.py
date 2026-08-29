@@ -23,7 +23,7 @@ class Order(Base):
         String,
         nullable=False,
     )
-    quantity: Mapped[int] = mapped_column()
+    quantity: Mapped[int] = mapped_column(nullable=False)
     status: Mapped[str] = mapped_column(
         String,
         nullable=False,

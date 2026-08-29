@@ -15,8 +15,7 @@ permissions:
   pull-requests: read
 
 safe-outputs:
-  report-failure-as-issue:
-    - "!ai_credits_rate_limit_error"
+  report-failure-as-issue: false
   submit-pull-request-review:
     max: 1
     allowed-events: [COMMENT]
@@ -108,13 +107,17 @@ Keep each finding to one sentence whenever possible. Do not add Summary, Evidenc
 
 ## API Error Handling
 
-Treat Gemini daily quota exhaustion as a non-blocking condition.
+The AI review is advisory and non-blocking.
 
-If the Gemini API reports that the daily quota has been exhausted, do not fail the Pull Request. End the review with:
+If Gemini cannot perform the review because the daily quota is exhausted, do not attempt to work around the limit and do not treat the missing review as a code defect.
+
+Use this exact message when possible:
 
 `AI review skipped: Gemini daily quota exhausted.`
 
-Do not treat other API or configuration errors as quota exhaustion. Invalid API keys, unavailable models, permission errors, malformed requests, and workflow/configuration errors must remain visible as failures.
+If the runtime exposes the quota error before the agent can produce output, the workflow must remain non-blocking. The workflow should expose the reason in its job summary or logs when the runtime supports it.
+
+Do not hide or misclassify the reason for other failures.
 
 ## Severity
 
@@ -134,6 +137,8 @@ Submit at most one non-blocking COMMENT review.
 Create inline comments only for meaningful findings tied to changed lines.
 
 Never approve, request changes, implement fixes, or expose secrets.
+
+If the review cannot run because of Gemini quota exhaustion, clearly report that the AI review was skipped rather than implying that the code was reviewed successfully.
 
 ## Final Rule
 
