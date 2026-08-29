@@ -1,6 +1,6 @@
 ---
 name: AI Dev Reviewer
-description: Review pull requests as a senior software engineer, using the Story identified from the PR branch and the repository's approved engineering context.
+description: Fast code review checking for obvious bugs, missing tests, and basic engineering practices.
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -22,81 +22,51 @@ safe-outputs:
     max: 1
     allowed-events: [COMMENT]
   create-pull-request-review-comment:
-    max: 10
+    max: 5
 ---
 
-# Dev Reviewer CI
+# Dev Reviewer CI — Optimized
 
-Review the current pull request using the imported Dev Reviewer agent.
+Fast, lightweight PR review focused on obvious issues.
 
-## Preconditions
+## Scope
 
-Before reviewing, determine what review context is reliably available.
+Review the current pull request for:
 
-### Story-aware review
+- **Obvious bugs** — syntax errors, missing error handling, null references, unhandled exceptions
+- **Missing tests** — new code without tests, critical logic untested
+- **Basic code quality** — duplication, unreadable code, unclear naming
+- **Repository conventions** — clear violations of established patterns
 
-Look for a Story ID in the following order:
+## No Context Required
 
-1. Pull Request branch name
-2. Pull Request title
-3. Pull Request description
+- Do NOT require Story ID or Story context
+- Do NOT fetch Acceptance Criteria, System Analysis, or Implementation Map
+- Do NOT perform deep architecture review
+- Do NOT speculate about requirements or intended behavior
 
-Use Story context only when a Story ID can be identified reliably.
+## What NOT to Review
 
-When a valid Story ID is found:
+- Regression risk across distant code
+- Deep authorization/security analysis
+- Comprehensive architectural fit
+- Style preferences or subjective quality
+- Features that should exist (YAGNI)
 
-- locate the corresponding Story in the repository;
-- use its Acceptance Criteria, BA analysis, System Analyst analysis, QA analysis, Implementation Map and relevant decisions as review context;
-- verify that the implementation satisfies the stated requirements;
-- identify inconsistencies between the Story, implementation and tests.
+## Quick Process
 
-For Story-aware review, use the following context where available:
+1. Scan diff for obvious errors
+2. Check for tests on new code
+3. Look for clear code quality issues
+4. Verify repository patterns
+5. Report high-confidence findings only
 
-- Story;
-- approved Acceptance Criteria;
-- approved System Analyst analysis;
-- approved Implementation Map;
-- relevant API/data contracts;
-- relevant existing source code;
-- relevant tests;
-- PR diff;
-- available CI/test evidence.
+## Minimal Comments
 
-### Code-focused review
-
-If no reliable Story ID is available:
-
-- do not treat the absence of a Story ID as a defect;
-- do not invent business requirements or Acceptance Criteria;
-- review the change based on:
-  - Pull Request description;
-  - changed code;
-  - existing tests;
-  - repository documentation;
-  - engineering principles;
-  - available technical context;
-  - CI/test evidence;
-- focus on correctness, regression risk, maintainability, security, error handling, test coverage and unintended behavior.
-
-### Context integrity
-
-Never invent missing:
-
-- business requirements;
-- Acceptance Criteria;
-- architectural decisions;
-- expected system behavior;
-- dependencies;
-- security requirements.
-
-If important context is missing or contradictory:
-
-- explicitly state the uncertainty;
-- do not silently resolve it through assumptions;
-- review only what can be supported by available evidence;
-- escalate when the missing context prevents a reliable conclusion.
-
-Do not report the absence of a Story ID as a defect unless repository policy explicitly requires a Story for that type of change.
+- Limit to obvious, evidence-based findings
+- Skip speculative or contextual issues
+- Move on if context is missing
+- Focus on impact over thoroughness
 
 ## Story Identification
 
