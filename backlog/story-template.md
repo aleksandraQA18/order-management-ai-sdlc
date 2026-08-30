@@ -23,6 +23,16 @@ Required: YES / NO
 Artifact:
 `path/to/design.html`
 
+### OPEN ISSUES
+
+## Missing Information
+
+- [OPEN] ...
+
+## Ambiguity
+
+- [OPEN] ...
+
 ---
 
 ## System Analyst Analysis

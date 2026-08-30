@@ -1,147 +1,70 @@
 ---
-name: requirements-analysis
-description: Analyze business requirements and refine a Story into clear, observable and testable business behavior without introducing technical implementation.
-argument-hint: "[Story]"
+name: micro-requirements-analysis
+description: Minimal analysis of business intent for micro-story. Clarifies Story Core, refines Acceptance Criteria, and identifies missing information or ambiguity without expanding scope or introducing technical details.
+argument-hint: "[BA Story Slice]"
 ---
 
-# Requirements Analysis
+# Micro Requirements Analysis
 
-Use this skill when analyzing or refining business requirements and Acceptance Criteria.
+Use this skill to perform minimal business analysis for micro-stories.
 
-## Analysis Flow
+## Analysis Flow (lightweight)
 
-Follow this sequence:
-
-1. Identify the business goal and expected business value.
-2. Identify the actor or user affected by the requirement.
-3. Identify the trigger or condition that starts the behavior.
-4. Define the expected business outcome.
-5. Identify applicable business rules.
-6. Define what is in scope.
-7. Define what is explicitly out of scope.
-8. Identify business dependencies.
-9. Identify exceptions, ambiguity and missing information.
-10. Validate the Acceptance Criteria against the identified behavior.
+1. Clarify the actor (As a).
+2. Clarify the capability (I want).
+3. Clarify the business value (So that).
+4. Refine Acceptance Criteria (max 3) into clear, observable business behavior.
+5. Identify missing information (OPEN).
+6. Identify ambiguity (OPEN).
 
 ## Requirement Quality
 
-For each requirement and Acceptance Criterion, verify:
+Each element must be:
 
-- the expected behavior is observable;
-- the expected outcome is clear;
-- the relevant condition or trigger is clear;
-- the behavior can be tested without knowing the implementation;
-- business rules are explicit;
-- scope is unambiguous;
-- dependencies are identified;
-- conflicting requirements are identified.
+- clear and unambiguous;
+- observable from a business perspective;
+- testable without knowing implementation;
+- minimal and proportional to the micro-story.
 
 ## Acceptance Criteria
 
-Acceptance Criteria should:
+Acceptance Criteria must:
 
-- describe observable business behavior;
-- represent business intent;
+- describe business behavior, not technical implementation;
 - be independently understandable;
-- be testable;
-- avoid implementation details.
+- avoid API, database or architectural details;
+- remain within the scope of the Story Core.
 
-When an Acceptance Criterion is ambiguous or incomplete, identify the specific missing information rather than inventing expected behavior.
-
-## Scope
-
-Explicitly distinguish:
+## Scope Rules
 
 IN SCOPE:
-...
+
+- business intent;
+- business outcome;
+- minimal business rules.
 
 OUT OF SCOPE:
-...
 
-## Business Dependencies
-
-Identify dependencies that affect business behavior or scope.
-
-Consider:
-
-- other business processes;
-- dependent business rules;
-- actors or roles;
-- upstream or downstream business activities;
-- prerequisites.
-
-Do not introduce technical dependencies.
-
-## Ambiguity and Conflicts
-
-Identify:
-
-- missing information;
-- contradictory requirements;
-- unclear terminology;
-- undefined outcomes;
-- unclear ownership or responsibility;
-- assumptions that materially affect behavior.
-
-Do not silently resolve ambiguity or conflicts.
-
-Mark unresolved decisions as:
-
-OPEN
-
-For significant open decisions, provide:
-
-- question;
-- why it matters;
-- reasonable alternatives;
-- recommendation.
-
-## Reasoning Classification
-
-Clearly distinguish:
-
-FACT:
-...
-
-INFERENCE:
-...
-
-PROPOSAL:
-...
-
-DECISION:
-OPEN
-
-Do not present an inference or proposal as an approved business decision.
-
-## Traceability
-
-Maintain traceability:
-
-Business Requirement
-→ Story
-→ Business Rule
-→ Acceptance Criterion
-
-Acceptance Criteria must remain connected to the business requirement they verify.
-
-If an Acceptance Criterion cannot be traced to an approved business requirement, identify the issue rather than inventing justification.
-
-## Boundary
-
-This skill defines:
-
-- how business requirements are analyzed;
-- how business behavior is clarified;
-- how scope and dependencies are identified;
-- how Acceptance Criteria are assessed.
-
-It does not define:
-
-- system architecture;
-- APIs;
-- database structures;
+- architecture;
+- API design;
+- database structure;
 - implementation details;
-- test implementation.
+- UI/UX invention.
 
-Those concerns belong to the relevant downstream role.
+## Ambiguity & Missing Information
+
+Mark unclear or missing information as:
+
+- [OPEN] Missing Information
+- [OPEN] Ambiguity
+
+Do not resolve ambiguity.  
+Do not invent missing business behavior.
+
+## Output
+
+The skill produces:
+
+- clarified Story Core;
+- refined Acceptance Criteria;
+- list of OPEN issues (missing information, ambiguity).
