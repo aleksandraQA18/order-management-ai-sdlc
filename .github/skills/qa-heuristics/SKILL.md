@@ -1,51 +1,74 @@
 ---
 name: qa-heuristics
-description: Apply context-driven QA heuristics to discover risks, edge cases, failure modes and verification targets; produce concise findings for the QA Analysis skill.
+description: Perform targeted heuristic risk discovery for a Story and map material findings to QA risks and Verification Targets.
 argument-hint: "[Story]"
 ---
 
-# QA Heuristics Skill
+# QA Heuristics
 
-Use this skill to _discover_ meaningful risks and verification targets that the QA Analysis will evaluate.  
-This skill explains _how to think_ with heuristics: which questions to ask, how to convert findings into risks, and how to produce a concise, machine-friendly findings output.
+Use only when additional heuristic discovery can reveal material risk not already covered by QA Analysis.
 
 ## Inputs
 
-- Approved Acceptance Criteria
-- System Analyst analysis
-- BA analysis
-- Relevant UI design artifact when applicable
-- Any available implementation evidence (optional)
+- approved Acceptance Criteria;
+- approved BA/SA analysis;
+- relevant UI artifact;
+- relevant implementation evidence.
 
-## Heuristic Selection
+## Selection
 
-- Choose heuristics relevant to the Story type and affected components (e.g., input/boundary for CRUD, workflow/state for payments).
-- Do not run the full checklist mechanically; prefer a targeted subset that is likely to produce meaningful findings.
-- Prioritize heuristics that map to high-impact or uncertain areas identified in BA/SA.
+Select only relevant families:
+- Input & Boundary
+- State & Lifecycle
+- Workflow
+- Integration
+- Data
+- Authorization
+- Concurrency & Timing
+- Error Handling
+- Regression
 
-## How to apply heuristics (method)
+Do not run the checklist mechanically.
 
-- For each selected heuristic:
-  1. Formulate a focused question the heuristic raises.
-  2. Inspect evidence (BA/SA, code, tests, design) for signals that answer the question.
-  3. If evidence reveals a concern, record a concise Finding and map it to a Verification Target.
-  4. Classify the resulting Risk (LOW / MEDIUM / HIGH) with a short rationale.
-- Use the reasoning chain: **Heuristic → Question → Finding → Risk → Verification Target**.
-- Tag statements as **FACT** (evidence-backed), **INFERENCE** (reasonable deduction), or **PROPOSAL** (suggested verification).
-- Ignore heuristics that produce no meaningful finding.
+## Method
 
-## Typical heuristic families (pick relevant ones)
+`Heuristic → focused question → evidence → Finding → Risk → Verification Target`
 
-- **Input & Boundary**: empty/null, min/max, invalid format, large input, duplicates, encoding.
-- **State & Lifecycle**: repeated operation, invalid transition, partial completion, expiry.
-- **Workflow**: retries, timeouts, interruptions, alternate paths.
-- **Integration**: dependency unavailable, slow/invalid response, contract mismatch.
-- **Data**: duplicate/stale/missing data, concurrent modification, partial update.
-- **Authorization**: unauthenticated, unauthorized, wrong owner.
-- **Concurrency & Timing**: race conditions, duplicate submissions, ordering issues.
-- **Error Handling**: safe failure, actionable messages, recoverability.
-- **Regression**: shared components, changed APIs, previous defects.
+Record a finding only when it materially affects quality.
 
-## Output Contract
+## Evidence
 
-Produce the following structured artefact exactly.
+Use:
+- `FACT` — directly supported by evidence;
+- `INFERENCE` — reasonable deduction;
+- `PROPOSAL` — suggested verification, not a requirement.
+
+Never convert a proposal into a business requirement.
+
+## Risk
+
+Use `HIGH`, `MEDIUM`, or `LOW` based on impact and likelihood. Keep rationale short.
+
+## Verification Target
+
+Use:
+
+`VT-XX: [observable behavior]`
+
+Do not generate test cases or implementation instructions.
+
+## Output
+
+Produce exactly:
+
+```text
+# Heuristic Findings
+
+## Findings
+- H-01: [FACT/INFERENCE/PROPOSAL] [finding] | Risk: [LOW/MEDIUM/HIGH] | VT: [VT-XX]
+
+## Questions / OPEN
+- [material unresolved question, or None]
+```
+
+Do not duplicate existing QA Analysis findings unless new evidence materially changes the assessment.

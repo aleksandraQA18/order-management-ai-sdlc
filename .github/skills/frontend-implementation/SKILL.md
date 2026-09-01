@@ -1,155 +1,64 @@
 ---
 name: frontend-implementation
-description: Implement approved frontend behavior from the Story and Implementation Map using the existing frontend architecture, conventions and APIs without inventing product behavior.
+description: Implement approved frontend behavior using existing project patterns and the smallest safe change.
 argument-hint: "[Story]"
 ---
 
 # Frontend Implementation
 
-Use this skill when implementing frontend changes assigned to `FE`.
+Implement only the approved FE scope.
 
-## Inputs
+## Flow
 
-Use:
+1. Read approved BA/SA requirements and relevant contracts.
+2. Inspect affected frontend code.
+3. Search for reusable components, hooks, services, utilities, and API clients.
+4. Identify the smallest safe change.
+5. Implement using existing project patterns.
+6. Run relevant validation.
+7. Review the diff for scope and unintended changes.
 
-- approved Story;
-- approved Acceptance Criteria;
-- approved System Analyst analysis;
-- approved Implementation Map;
-- approved QA Quality Contract;
-- approved UI Design Artifact when applicable;
-- existing frontend source code;
-- existing frontend tests;
-- frontend documentation;
-- repository conventions.
+## API Boundary
 
-Treat approved requirements and decisions as the source of product behavior.
+Use only approved API/system contracts.
 
-## Implementation Flow
+Do not guess:
 
-1. Inspect the relevant existing frontend code before changing it.
-2. Identify the components, routes, state, services and dependencies affected by the Implementation Map.
-3. Understand existing conventions and reusable patterns.
-4. Identify the smallest maintainable implementation that satisfies the approved behavior.
-5. Implement only the frontend changes assigned to `FE`.
-6. Integrate with approved API contracts and existing frontend abstractions.
-7. Preserve existing behavior outside the approved Story scope.
-8. Run relevant frontend checks.
-9. Review the resulting diff for unintended changes.
-10. Record implementation evidence and deviations.
+- endpoints;
+- methods;
+- request/response fields;
+- status codes;
+- error payloads;
+- state transitions.
 
-## Existing Code
+If required contract information is missing or conflicting, report `OPEN`.
 
-Prefer existing:
+## Reuse
 
-- components;
-- hooks;
-- services;
-- state management;
-- routing;
-- validation patterns;
-- error handling;
-- styling conventions;
-- test utilities.
+Before creating a new component, hook, service, utility, or API client, search for an existing equivalent.
 
-Do not introduce a new pattern when an appropriate existing pattern already exists without a justified reason.
-
-Do not refactor unrelated code.
+Prefer reuse or extension when it preserves current architecture and behavior.
 
 ## Scope
 
-The Implementation Map is the boundary of frontend work.
+- Do not modify backend behavior.
+- Do not add unrelated refactoring.
+- Do not change approved requirements.
+- Do not invent behavior.
+- Prefer the smallest safe change over broad cleanup.
 
-If implementation reveals that another component, service or backend change is required:
+## Validation
 
-- stop the affected work;
-- record the issue as `OPEN`;
-- explain the impact;
-- request human review.
+Run only relevant checks for the changed frontend code.
 
-Do not silently expand the Story scope or modify the Implementation Map.
+Never weaken, remove, or bypass a failing check merely to obtain a passing result.
 
-## API Integration
+## Output
 
-Use only approved API behavior and contracts.
+Report briefly:
 
-If the existing API differs from the approved contract:
+- implemented changes;
+- tests/checks run and result;
+- `OPEN` issues or deviations.
 
-- do not invent a new contract;
-- do not silently adapt the product behavior;
-- record the mismatch as `OPEN`;
-- explain the impact;
-- request human review.
-
-Use existing frontend API integration patterns where appropriate.
-
-## UI Boundary
-
-When a UI Design Artifact is provided:
-
-- treat the approved artifact as the source of UI/UX requirements;
-- implement the defined layout, components, states and interactions;
-- preserve the approved behavior;
-- do not introduce intentional UX changes without human approval.
-
-If the design is ambiguous, incomplete or conflicts with approved business/system requirements:
-
-- do not guess;
-- record the issue as `OPEN`;
-- request human review.
-
-Do not treat the UI Design Artifact as authorization to change business behavior.
-
-## Code Quality
-
-The implementation should:
-
-- follow repository conventions;
-- remain maintainable;
-- avoid unnecessary abstraction;
-- avoid duplicated logic where an existing abstraction is appropriate;
-- preserve type safety;
-- handle relevant loading, success and error states;
-- avoid unrelated refactoring.
-
-Choose the simplest implementation that satisfies the approved requirements.
-
-## Documentation
-
-Identify whether implementation requires documentation changes.
-
-Use:
-
-NO_CHANGE
-
-UPDATE_EXISTING
-
-NEW_DOCUMENT
-
-Do not document unapproved behavior.
-
-## Evidence
-
-Record evidence for:
-
-- implemented frontend changes;
-- relevant checks;
-- test execution;
-- build or static checks;
-- deviations and limitations.
-
-Never claim a check passed unless it actually ran.
-
-## Boundary
-
-This skill defines how to implement approved frontend behavior.
-
-It does not define:
-
-- business requirements;
-- system architecture;
-- UX/design decisions;
-- QA verification strategy;
-- backend implementation.
-
-Those concerns belong to the relevant role or artifact.
+Do not add unrelated documentation or analysis.

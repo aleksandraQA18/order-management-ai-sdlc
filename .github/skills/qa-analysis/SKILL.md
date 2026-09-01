@@ -1,41 +1,158 @@
 ---
 name: qa-analysis
-description: Perform focused QA analysis for a Story and produce a concise, actionable QA Analysis output used by the QA Agent.
+description: Define the minimum risk-based verification strategy and Quality Contract for a Story across API, integration, and E2E levels.
 argument-hint: "[Story]"
 ---
 
-# QA Analysis Skill
+# QA Analysis
 
-Use this skill to perform a focused, methodical QA analysis that produces the artefacts required by the QA Agent.  
-This skill explains _jak myśleć_ o jakości: co sprawdzić, jak klasyfikować ryzyko, jak ocenić pokrycie i jak sformułować minimalny, ryzykiem uzasadniony Quality Contract.
+Convert approved requirements and system analysis into the minimum verification needed for sufficient quality confidence.
 
 ## Inputs
 
-- Approved Acceptance Criteria
-- BA analysis
-- System Analyst analysis
-- Relevant UI design artifact when applicable
-- Available implementation evidence (code diffs, tests, CI results) when present
+- approved BA Analysis and Acceptance Criteria;
+- approved System Analyst Analysis;
+- relevant UI Design Artifact;
+- relevant implementation, tests, and CI evidence when available.
 
-## Analysis Guidance
+Read only what is relevant to the Story.
 
-- **Start od wymagań**: mapuj każdy punkt Acceptance Criteria na możliwe zachowanie systemu i potencjalne ryzyka.
-- **Używaj dowodów**: traktuj kod i testy jako _evidence_, nie jako ostateczne źródło prawdy.
-- **Klasyfikuj ryzyko** według wpływu i prawdopodobieństwa:
-  - **HIGH** — krytyczny biznesowo lub może spowodować poważne uszkodzenie danych lub przerwanie usługi.
-  - **MEDIUM** — zauważalny wpływ na użytkownika lub integracje; możliwy do wykrycia w testach automatycznych.
-  - **LOW** — kosmetyczne, rzadkie lub niskiego wpływu.
-- **Ocena pokrycia**:
-  - Zidentyfikuj istniejące testy powiązane z każdym Verification Target.
-  - Oceniaj ich skuteczność: deterministyczne, szybkie, niezależne.
-  - Wskaż luki: brak testu; test nie pokrywa scenariusza negatywnego; test jest flaky.
-- **Regresja**:
-  - Określ minimalny zakres regresji oparty na zmianach komponentów i zależnościach.
-  - Preferuj selektywny regres testów o wysokim prawdopodobieństwie wpływu.
-- **Quality Contract**:
-  - Powinien być proporcjonalny do ryzyka.
-  - Zawiera wymagane weryfikacje, automatyzację, manualne kroki i kryterium bramki jakości.
+## Flow
 
-## Output Contract
+1. Map Acceptance Criteria to observable behavior.
+2. Identify material risks using impact and likelihood.
+3. Define Verification Targets for behaviors/risks requiring evidence.
+4. Select the lowest sufficient test level:
+   - `API`: API behavior, validation, contracts, errors.
+   - `INTEGRATION`: real infrastructure, persistence, service boundaries, cross-component behavior.
+   - `E2E`: critical user journeys/cross-system behavior not sufficiently covered below.
+5. Define minimum evidence and automation mode.
+6. Derive focused regression scope from changed components, dependencies, contracts, and critical journeys.
+7. Produce the Quality Contract.
 
-Produce the following structured artefact exactly.
+## Risk Rules
+
+Use `HIGH`, `MEDIUM`, or `LOW`, based on impact and likelihood.
+
+Report only material risks. Keep rationale short and evidence-based.
+
+## Verification Targets
+
+Format:
+
+`VT-XX: [observable behavior] | AC: [AC-XX] | Risk: [R-XX] | Level: [API/INTEGRATION/E2E] | Evidence: [minimum evidence]`
+
+Create targets only where verification provides meaningful confidence.
+
+## Test-Level Rules
+
+Prefer the lowest sufficient level.
+
+Use integration testing when real infrastructure behavior is part of the risk; use Testcontainers when appropriate.
+
+Use E2E only for critical journeys or behavior that lower levels cannot sufficiently verify.
+
+Do not repeat the same verification at multiple levels without a risk-based reason.
+
+## Automation
+
+For each target choose:
+- `AUTOMATED`
+- `MANUAL`
+- `NOT_REQUIRED`
+
+State only a short rationale. Do not prescribe framework-level implementation.
+
+## Regression
+
+Keep regression focused on changed behavior and its dependencies. Require full regression only when risk justifies it.
+
+## BDD
+
+BDD is optional. Use it only when examples materially clarify critical business behavior, high-risk rules, meaningful negative behavior, or important cross-component flows.
+
+## Quality Contract
+
+```text
+## QA Quality Contract
+
+### Verification Targets
+- VT-01: ...
+
+### Risk
+- R-01: HIGH — ...
+
+### Test Levels
+- API: ...
+- INTEGRATION: ...
+- E2E: ...
+
+### Required Evidence
+- ...
+
+### Regression Scope
+- ...
+
+### Quality Gate
+- PASS criteria: ...
+- FAIL criteria: ...
+- OPEN conditions: ...
+```
+
+The Quality Contract defines minimum evidence, not every possible test.
+
+## Output
+
+Produce exactly:
+
+```text
+# QA Analysis
+
+## Risks
+- R-01: [LOW/MEDIUM/HIGH] — [short rationale]
+
+## Verification Targets
+- VT-01: [observable behavior] | AC: [AC-XX] | Risk: [R-XX] | Level: [API/INTEGRATION/E2E] | Evidence: [minimum evidence]
+
+## Coverage Gaps
+- [material gap, or None identified]
+
+## Automation Strategy
+- VT-XX: [AUTOMATED/MANUAL/NOT_REQUIRED] — [short rationale]
+
+## Regression Scope
+- [focused scope, or None beyond current verification]
+
+## QA Quality Contract
+
+### Verification Targets
+- VT-01: ...
+
+### Risk
+- R-01: ...
+
+### Test Levels
+- API: ...
+- INTEGRATION: ...
+- E2E: ...
+
+### Required Evidence
+- ...
+
+### Regression Scope
+- ...
+
+### Quality Gate
+- PASS criteria: ...
+- FAIL criteria: ...
+- OPEN conditions: ...
+```
+
+Do not add sections.
+
+## Constraints
+
+- Start from approved requirements, not implementation assumptions.
+- Do not redefine requirements or prescribe implementation.
+- Do not invent risks, targets, or tests.
+- Keep analysis minimal and proportional to risk.

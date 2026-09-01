@@ -1,150 +1,74 @@
 ---
 name: frontend-testing
-description: Implement focused frontend unit and component tests for approved behavior, reusing existing coverage and following the QA Quality Contract.
-argument-hint: "[Story]"
+description: Add focused frontend unit or component tests for approved Verification Targets when frontend-level verification provides the right evidence.
+argument-hint: "[Story and QA Quality Contract]"
 ---
 
 # Frontend Testing
 
-Use this skill when implementing or updating frontend unit and component tests.
+Implement only frontend tests that provide useful evidence for approved QA Verification Targets.
 
 ## Inputs
 
 Use:
 
-- approved Acceptance Criteria;
 - approved QA Quality Contract;
-- QA verification targets;
-- existing frontend tests;
-- changed frontend implementation;
-- repository test conventions.
-
-QA defines what requires verification.
-
-The FE Developer determines how appropriate frontend unit/component tests provide that verification.
+- approved Acceptance Criteria;
+- affected frontend behavior;
+- existing frontend test patterns.
 
 ## Test Selection
 
-Before adding a test:
+Add a frontend test when the target is frontend behavior that is best verified at unit/component level.
 
-1. inspect existing relevant tests;
-2. determine whether sufficient coverage already exists;
-3. identify the behavior or risk that requires coverage;
-4. select unit or component level when appropriate;
-5. update existing tests when that is clearer than creating duplicates.
-
-Do not create tests solely to increase test count.
-
-## Unit Tests
-
-Use unit tests for isolated frontend logic such as:
-
-- pure functions;
-- transformations;
-- validation logic;
-- deterministic state logic;
-- other behavior that can be verified without rendering a component.
-
-Keep unit tests focused and independent.
-
-## Component Tests
-
-Use component tests for behavior that depends on rendering and user interaction, such as:
-
-- rendering important states;
-- user interactions;
-- validation feedback;
-- conditional UI behavior;
-- loading and error states;
-- callbacks and observable component behavior.
-
-Prefer testing behavior visible at the component boundary rather than implementation details.
-
-## Assertions
-
-Assertions should verify meaningful outcomes.
-
-Prefer:
-
-- visible behavior;
-- emitted events;
-- state exposed through the UI;
-- user-observable results;
-- important contract boundaries.
-
-Avoid assertions that merely mirror internal implementation structure.
-
-Do not weaken assertions to make tests pass.
-
-## Test Data
-
-Use focused, representative data.
-
-Where a requirement contains meaningful boundaries or invalid classes, cover the relevant partitions without creating redundant cases.
-
-Keep test data understandable and close to the behavior being verified.
-
-## Mocks and Stubs
-
-Mock external dependencies when required to isolate the frontend behavior under test.
-
-Avoid excessive mocking that makes tests verify mocks rather than application behavior.
-
-Do not use mocks to bypass a verification target that requires a higher test level.
-
-## Determinism
-
-Tests should be:
-
-- deterministic;
-- isolated where applicable;
-- repeatable;
-- independent from execution order;
-- free from unnecessary timing assumptions.
-
-Do not hide instability with arbitrary retries or excessive timeouts.
-
-## Existing Coverage
-
-When implementation changes existing behavior:
-
-- identify affected tests;
-- update tests when behavior intentionally changed;
-- preserve valid regression coverage;
-- remove obsolete tests only when their behavior is no longer valid and the change is within approved scope.
-
-Do not delete failing tests simply because the implementation currently fails them.
-
-## Test Level Boundary
-
-Frontend unit/component tests do not replace:
+Do not duplicate behavior better verified by:
 
 - API tests;
 - integration tests;
-- E2E tests;
-- manual verification;
+- E2E tests.
 
-when those are required by the QA Quality Contract.
+Do not create tests only to increase coverage or test count.
 
-## Evidence
+## Test Design
 
-Record:
+Prefer:
 
-- tests added or updated;
-- command used to run them;
-- result;
-- relevant limitations.
+- observable behavior;
+- meaningful assertions;
+- deterministic tests;
+- focused scenarios;
+- existing project test utilities and patterns.
 
-Never claim test execution without actual execution.
+Avoid implementation-detail assertions unless they are necessary to protect a meaningful behavior.
 
-## Boundary
+## Mocking
 
-This skill defines how FE unit/component tests are implemented.
+Mock only the boundary needed to isolate the behavior under test.
 
-It does not define:
+Do not mock the behavior that the selected test level is intended to verify.
 
-- the overall QA strategy;
-- required regression scope;
-- API/integration/E2E test implementation;
-- business requirements;
-- system architecture.
+Prefer realistic fixtures and existing test helpers.
+
+## Scope
+
+- Do not change production behavior to make a test pass.
+- Do not weaken assertions.
+- Do not add unrelated refactoring.
+- Do not create frontend tests for backend/infrastructure behavior.
+
+## Validation
+
+Run relevant frontend tests and checks.
+
+Report failures honestly.
+
+## Output
+
+Report briefly:
+
+- tests added/updated;
+- Verification Targets covered;
+- checks run and result;
+- remaining coverage gaps or `OPEN` issues.
+
+Do not add unrelated analysis.
