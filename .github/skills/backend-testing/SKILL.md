@@ -1,155 +1,52 @@
 ---
 name: backend-testing
-description: Implement focused backend unit tests for approved behavior, reusing existing coverage and following the QA Quality Contract.
-argument-hint: "[Story]"
+description: Add focused backend unit tests for approved Verification Targets when unit-level evidence is appropriate.
+argument-hint: "[Story and QA Quality Contract]"
 ---
 
 # Backend Testing
 
-Use this skill when implementing or updating backend unit tests.
+Add only backend unit tests that provide useful evidence for approved QA Verification Targets.
 
-The BE Developer Agent may implement and update backend unit tests.
+## Selection
 
-Tests must:
-
-- verify relevant backend behavior;
-- follow the approved QA Quality Contract;
-- be deterministic and isolated where applicable;
-- contain meaningful assertions;
-- avoid testing implementation details without a justified reason.
-
-Do not create tests only to increase test count.
-
-Do not replace required API, integration, E2E or manual verification with
-backend unit tests.
-
-## Inputs
-
-Use:
-
-- approved Acceptance Criteria;
-- approved QA Quality Contract;
-- QA verification targets;
-- existing backend tests;
-- changed backend implementation;
-- repository test conventions.
-
-QA defines what requires verification.
-
-The BE Developer determines how appropriate backend unit tests provide that verification.
-
-## Test Selection
-
-Before adding a test:
-
-1. inspect existing relevant tests;
-2. determine whether sufficient coverage already exists;
-3. identify the behavior or risk that requires coverage;
-4. select unit level when appropriate;
-5. update existing tests when clearer than creating duplicates.
-
-Do not create tests solely to increase test count.
-
-## Unit Tests
-
-Use unit tests for isolated backend logic such as:
-
+Use unit tests for isolated:
 - business rules;
 - validation;
 - transformations;
 - deterministic calculations;
-- domain logic;
-- service behavior that can be isolated from external systems.
+- domain/service behavior.
 
-Keep tests focused and independent.
+Do not use unit tests as substitutes for API, integration, or E2E verification.
 
-## Assertions
+Do not create tests only to increase count or coverage.
 
-Assertions should verify meaningful outcomes.
+## Design
 
-Prefer:
+Prefer observable outcomes, meaningful assertions, focused data, deterministic execution, and existing fixtures/helpers.
 
-- returned values;
-- state exposed by the unit boundary;
-- business rule outcomes;
-- expected exceptions/errors;
-- meaningful side effects.
+Avoid implementation-detail assertions unless they protect meaningful behavior.
 
-Avoid assertions that merely mirror implementation structure.
+## Mocking
 
-Do not weaken assertions to make tests pass.
+Mock only boundaries that must be isolated.
 
-## Test Data
+Do not mock the behavior being verified. Avoid excessive mocking that makes tests validate mocks rather than application behavior.
 
-Use focused, representative data.
+## Existing Tests
 
-Where requirements contain meaningful boundaries or invalid classes, cover relevant partitions without unnecessary duplication.
+Update relevant tests when behavior changes. Preserve valid regression coverage.
 
-Keep test data understandable and close to the behavior being verified.
+Do not delete or weaken a failing test merely because implementation currently fails it.
 
-## Mocks and Stubs
+## Validation
 
-Mock or stub external dependencies when required to isolate the unit under test.
+Run relevant backend tests/checks and report failures honestly. Do not use arbitrary retries or excessive timeouts to hide instability.
 
-Avoid excessive mocking that makes tests verify mocks rather than application behavior.
+## Output
 
-Do not mock the behavior that the unit test is supposed to verify.
-
-## Determinism
-
-Tests should be:
-
-- deterministic;
-- isolated where applicable;
-- repeatable;
-- independent from execution order;
-- free from unnecessary timing assumptions.
-
-Do not hide instability with arbitrary retries or excessive timeouts.
-
-## Existing Coverage
-
-When implementation changes existing behavior:
-
-- identify affected tests;
-- update tests when behavior intentionally changed;
-- preserve valid regression coverage;
-- remove obsolete tests only when their behavior is no longer valid and the change is within approved scope.
-
-Do not delete failing tests simply because the implementation currently fails them.
-
-## Test-Level Boundary
-
-Backend unit tests do not replace:
-
-- API tests;
-- integration tests;
-- E2E tests;
-- manual verification;
-
-when those are required by the QA Quality Contract.
-
-API, integration and E2E test implementation is outside this skill.
-
-## Evidence
-
-Record:
-
-- tests added or updated;
-- command used to run them;
-- result;
-- relevant limitations.
-
-Never claim test execution without actual execution.
-
-## Boundary
-
-This skill defines how BE unit tests are implemented.
-
-It does not define:
-
-- overall QA strategy;
-- API/integration/E2E test implementation;
-- regression strategy;
-- business requirements;
-- system architecture.
+Report:
+- tests added/updated;
+- Verification Targets covered;
+- checks/results;
+- remaining gaps or `OPEN` issues.

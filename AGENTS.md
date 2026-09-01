@@ -2,133 +2,100 @@
 
 ## Purpose
 
-Operating rules for the AI-SDLC workflow used in this repository.
+This repository uses AI agents to support analysis, implementation, testing, and review.
 
-AI agents support analysis, reasoning, documentation and implementation.
+AI may analyze, challenge, identify risks, and recommend. The Human is the final decision maker.
 
-AI is not the decision maker.
+## Source of Truth
 
-## Human-Owned UI Design
+Use this precedence:
 
-When a Story introduces or changes user-facing UI, the Human must provide an approved UI Design Artifact before BA analysis starts.
+1. Approved business requirements and Acceptance Criteria
+2. Approved System Analysis
+3. Approved QA Quality Contract
+4. Approved UI Design Artifact when applicable
+5. Current repository implementation and tests as evidence
 
-Agents must not invent UI/UX behavior when a required UI Design Artifact is missing.
+Implementation and existing tests must not redefine approved requirements.
 
-The UI Design Artifact is part of the Story input and must be treated as a source of UI requirements.
+Future or proposed context is not current system behavior.
 
-Changes to the approved UI/UX require Human review and approval.
-
-## Backlog
+## Story
 
 Stories are Human-created work items.
 
-The canonical Story structure is defined in:
+The canonical Story structure is:
 
 `backlog/story-template.md`
 
-Agents must process Stories according to this structure and must not
-silently invent missing requirements or decisions.
+Agents must follow that structure and must not silently add requirements or decisions.
 
-## Project Context
+## Ownership
 
-Canonical project context is maintained under `docs/context/`.
+| Agent | Owns |
+|---|---|
+| Business Analyst | business intent and Acceptance Criteria |
+| System Analyst | system behavior, API/data impact, architecture impact, Implementation Map |
+| QA | risks, verification strategy, Quality Contract |
+| FE Developer | frontend implementation and frontend unit/component tests |
+| BE Developer | backend/service implementation and backend unit tests |
 
-Relevant context documents should be used when performing role-specific
-analysis or implementation.
+An agent may identify an issue outside its ownership but must escalate rather than make the decision.
 
-Agents must distinguish current accepted context from proposed or future
-state described in other documentation.
+## Human Review
 
-## Global Rules
+Human review is required before a Story moves to the next major stage.
 
-1. Do not invent requirements.
-2. Missing information is `OPEN`.
-3. Do not silently resolve conflicts.
-4. Work only within the current Story.
-5. Prefer simple, maintainable solutions.
-6. Preserve traceability: Business Requirement → Story → Risk → Verification → Implementation → Evidence.
-7. Every Story requires a QA Quality Contract.
-8. Every merge requires CI and required quality gates.
-9. An agent must not approve its own work.
-10. Quality gates are risk-based.
-11. Do not create automation just to increase test count.
-12. Prefer the lowest effective test level.
-13. Never expose or commit secrets.
-14. Do not change business behavior without updating the relevant specification.
-15. Do not hide failures by weakening assertions or using unlimited retries.
-16. AI output is reviewed when it affects behavior, architecture, security, or quality gates.
-17. Do not silently change an approved API, data, system or business contract.
-18. If implementation reveals information that affects an approved decision, stop and request human review.
+Human approval is required for changes to:
 
-## Agent Ownership
-
-| Agent            | Ownership                                                                             |
-| ---------------- | ------------------------------------------------------------------------------------- |
-| Business Analyst | business intent and acceptance criteria                                               |
-| System Analyst   | system behavior, technical specification, architectural impact and Implementation Map |
-| QA               | risks, verification strategy and QA Quality Contract                                  |
-| FE Developer     | frontend implementation and frontend unit/component tests                             |
-| BE Developer     | backend/service implementation and backend unit tests                                 |
-
-Agents may identify issues outside their ownership, but must not make decisions
-belonging to another role.
-
-## Human-in-the-Loop
-
-The human is the final decision maker.
-
-Agents may:
-
-- analyze;
-- challenge assumptions;
-- identify risks;
-- identify ambiguities and conflicts;
-- propose solutions;
-- present alternatives;
-- recommend an option.
-
-Agents must not independently approve decisions.
-
-Every major agent analysis requires human review before the Story proceeds to
-the next stage.
-
-Human approval is required for decisions affecting:
-
-- product scope;
-- business behavior;
+- product scope or business behavior;
 - architecture;
-- system behavior;
 - API or data contracts;
-- security;
+- security decisions;
 - quality gates;
 - significant implementation decisions.
 
-Recommendation does not constitute approval.
+An agent must not approve its own work.
 
-## Agent Workflow
-
-The default workflow is:
+## Workflow
 
 ```text
 Business Requirements
         ↓
-Business Analyst
+Business Analyst → Human Review
+        ↓
+System Analyst → Human Review
+        ↓
+QA Analysis → Human Review
+        ↓
+FE / BE Implementation
         ↓
 Human Review
         ↓
-System Analyst
+QA Verification / Quality Gate
         ↓
-Human Review
-        ↓
-QA
-        ↓
-Human Review
-        ↓
-Implementation
-   ┌────┴────┐
-   ↓         ↓
-FE Developer  BE Developer
-   └────┬────┘
-        ↓
-Human Review
+CI / Merge
 ```
+
+FE and BE may work in parallel when their approved scopes are independent.
+
+## Global Constraints
+
+- Do not silently resolve ambiguity or conflicts.
+- Do not expand Story scope.
+- Do not silently change approved business, system, API, data, UI, or quality contracts.
+- Prefer the lowest effective test level.
+- Do not create automation only to increase test count.
+- Do not hide failures by weakening assertions or adding unlimited retries.
+- Never expose or commit secrets.
+- If implementation reveals information that changes an approved decision, stop and request Human Review.
+
+## Project Context
+
+Canonical product and architecture context is under:
+
+`docs/context/`
+
+Agents must distinguish current accepted context from future/proposed direction.
+
+Use only context relevant to the current task.

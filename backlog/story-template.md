@@ -2,21 +2,19 @@
 
 ## Story
 
-**As a** [user / actor]
+# Business Analysis
 
-**I want** [capability]
+## Story Core
 
-**So that** [business value]
+As a: [user / actor]  
+I want: [capability]  
+So that: [business value]
 
-## Human Input
+## Acceptance Criteria (max 3)
 
-### Business Request
-
-...
-
-### Constraints
-
-...
+AC-01:  
+AC-02:  
+AC-03:
 
 ### UI Design Artifact
 
@@ -25,141 +23,74 @@ Required: YES / NO
 Artifact:
 `path/to/design.html`
 
-### Initial Acceptance Criteria
+### OPEN ISSUES
 
-| ID | Initial Acceptance Criteria |
-| --- | --- |
-| AC-01 | |
-| AC-02 | |
-| AC-03 | |
+## Missing Information
 
----
+- [OPEN] ...
 
-## BA Analysis
+## Ambiguity
 
-| Area | Output |
-| --- | --- |
-| Business rules | |
-| Scope / Out of scope | |
-| Business dependencies | |
-| Open questions | |
-| Recommendation | |
+- [OPEN] ...
 
 ---
 
 ## System Analyst Analysis
 
-| Area | Output |
-| --- | --- |
-| System behavior / process | |
-| Components affected | |
-| Architecture impact | `NO_CHANGE / CHANGE_REQUIRED / OPEN` |
-| Data / API impact | |
-| Risks / trade-offs | |
-| Documentation impact | `NO_CHANGE / UPDATE_EXISTING / NEW_DOCUMENT` |
-| Open questions | |
-| Recommendation | |
+## System Behavior
 
-### Implementation Map
+[What the system must do]
+
+## Implementation Map
+
+[Backend / DB / Frontend / API]
 
 | Component | Required change | Developer | Dependencies |
-| --- | --- | --- | --- |
-| | | `FE / BE` | |
+| --------- | --------------- | --------- | ------------ |
+|           |                 | `FE / BE` |              |
 
-### Architecture Decision
+## Data & API Impact
 
-| Topic | Recommendation | Human Decision |
-| --- | --- | --- |
-| | | `OPEN` |
+[New model? New endpoint? Changes?]
+
+## Architecture Impact
+
+NO_CHANGE / CHANGE_REQUIRED
+
+## Risks & Trade-offs
+
+[Technical risks]
+
+## Recommendation
+
+[SA recommendation]
 
 ---
 
 ## QA Analysis
 
-| Area | Output |
-| --- | --- |
-| Critical behavior | |
-| Risks | |
-| Existing coverage | |
-| Coverage gaps | |
-| Verification targets | |
-| BDD scenarios | |
-| Test level | |
-| Automation | |
-| Regression impact | |
-| Quality gate | |
+## Critical Behavior
 
-### QA Quality Contract
+[What must never break]
 
-| Area | Definition |
-| --- | --- |
-| Required verification | |
-| Required automation | |
-| Required manual verification | |
-| Quality gate | |
+## Risks
 
----
+[Quality risks]
 
-## Human Decisions
+## BDD Scenarios
 
-| ID | Topic | Recommendation | Decision | Reason |
-| --- | --- | --- | --- | --- |
-| D-01 | | | `OPEN` | |
+Given  
+When  
+Then
+
+## Test Levels
+
+[Unit / Integration / E2E]
+
+## Regression Impact
+
+[What existing areas may break]
 
 ---
-
-## Implementation
-
-### FE
-
-| Area | Output |
-| --- | --- |
-| Changes | |
-| Unit / component tests | |
-| Documentation | |
-| Notes / deviations | |
-
-### BE
-
-| Area | Output |
-| --- | --- |
-| Changes | |
-| Unit tests | |
-| Documentation | |
-| Notes / deviations | |
-
----
-
-## Implementation Evidence
-
-| Check | Result | Evidence |
-| --- | --- | --- |
-| FE unit / component tests | | |
-| BE unit tests | | |
-| Build / static checks | | |
-| Other checks | | |
-
----
-
-## Verification
-
-| Verification | Result | Evidence |
-| --- | --- | --- |
-| API / integration | | |
-| E2E | | |
-| Manual | | |
-| CI | | |
-
----
-
-## Final Review
-
-| Area | Result | Notes |
-| --- | --- | --- |
-| Acceptance Criteria | | |
-| QA Quality Contract | | |
-| Implementation | | |
-| Verification | | |
-| Documentation | | |
 
 **Final status:** `OPEN`

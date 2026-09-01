@@ -1,242 +1,143 @@
 ---
 name: system-analysis
-description: Analyze the current system, define affected components and system behavior, assess architecture, and create an implementation boundary without prescribing code-level implementation.
+description: Perform minimal system-level analysis for a Story. Map approved business requirements to current and required system behavior, affected components, relevant API/data impact, architecture impact, material risks, and unresolved decisions.
 argument-hint: "[Story]"
 ---
 
-# System Analysis
+# System Analysis Skill
 
-Use this skill when performing system-level analysis for the current Story.
+Use this skill to perform minimal system-level analysis for the Story.
+
+The approved BA Analysis defines WHAT the business requires. This skill defines HOW to assess what the existing system must change to support it.
 
 ## Analysis Flow
 
-Follow this sequence:
-
-1. Understand the approved business behavior.
-2. Inspect the current system state.
-3. Identify the affected system process or flow.
-4. Identify affected components and their responsibilities.
-5. Identify required system behavior changes.
-6. Identify API and data impact where relevant.
-7. Identify dependencies between affected components.
-8. Assess architectural impact.
-9. Identify risks, constraints and trade-offs.
-10. Define the Implementation Map.
-11. Identify documentation impact.
-12. Identify unresolved questions and decisions.
-
-## Current System State
-
-Base the analysis on available evidence:
-
-- Architecture Context;
-- system and process documentation;
-- source code;
-- existing APIs;
-- existing tests.
-
-Use the evidence to distinguish current implementation from intended future behavior.
-
-Clearly distinguish:
-
-FACT:
-...
-
-INFERENCE:
-...
-
-PROPOSAL:
-...
-
-DECISION:
-OPEN
-
-Do not assume that existing implementation is automatically the desired behavior.
-
-If implementation contradicts approved business requirements, identify the discrepancy and mark the required decision as `OPEN`.
-
-## System Behavior
-
-Describe the relevant system behavior, including:
-
-- system flow;
-- affected behavior;
-- inputs and outputs;
-- state changes;
-- validation;
-- error behavior;
-- relevant dependencies.
-
-Focus on observable system behavior and responsibilities rather than code-level implementation.
-
-## Components
-
-Identify application components affected by the Story.
-
-For each component determine:
-
-- why it is affected;
-- what behavior must change;
-- assess how the approved UI behavior maps to affected system components and APIs.
-- whether the change is required or optional.
-
-Do not include components based only on speculation.
-
-Where possible, identify the responsible implementation area, such as:
-
-- frontend application;
-- backend service;
-- API;
-- persistence component;
-- integration;
-- shared component.
-
-## Implementation Map
-
-Create an Implementation Map that gives FE and BE Developers a clear implementation boundary.
-
-Use:
-
-| Component | Required change | Developer | Dependencies |
-| --------- | --------------- | --------- | ------------ |
-|           |                 | `FE / BE` |              |
-
-The map must answer:
-
-- WHAT needs to change;
-- WHERE it changes;
-- WHICH developer is responsible;
-- WHAT dependencies affect the implementation.
-
-The map must not prescribe:
-
-- classes;
-- functions;
-- file structure;
-- framework-specific implementation;
-- detailed algorithms.
-
-Those decisions belong to the relevant Developer unless explicitly defined by an approved requirement or decision.
-
-If the affected component or responsible developer cannot be determined from available evidence, mark it as `OPEN`.
-
-## Dependencies
-
-Identify dependencies between affected components.
-
-Consider:
-
-- API contracts;
-- data dependencies;
-- service dependencies;
-- frontend/backend dependencies;
-- ordering constraints;
-- shared components.
-
-Only document dependencies supported by the analysis.
-
-## API and Data Impact
-
-Identify relevant impact on:
-
-- API behavior;
-- request/response data;
-- validation;
-- persistence;
-- data relationships;
-- state transitions.
-
-Distinguish required changes from assumptions.
-
-Do not invent API or data behavior that is not required.
-
-## Architecture Impact
-
-Determine whether the current architecture is sufficient.
-
-Classify:
-
-NO_CHANGE
-
-CHANGE_REQUIRED
-
-OPEN
-
-When architectural change is required, describe:
-
-- affected components;
-- proposed direction;
-- reasonable alternatives;
-- risks;
-- trade-offs.
-
-The System Analyst may recommend an architectural solution.
-
-The human makes the final architectural decision.
-
-## Process Documentation
-
-If the Story affects an existing process:
-
-1. identify the affected process;
-2. describe the relevant system flow;
-3. identify affected components;
-4. identify documentation impact.
-
-Documentation must describe approved behavior.
-
-Do not create or update process documentation to represent an unapproved decision.
-
-## Risks and Trade-offs
-
-Identify relevant system-level risks and constraints.
-
-Consider:
-
-- coupling;
-- dependencies;
-- data consistency;
-- backward compatibility;
-- scalability;
-- maintainability;
-- operational impact;
-- impact on existing consumers.
-
-Do not turn hypothetical concerns into requirements.
-
-## Open Questions
-
-Mark missing or ambiguous information as:
-
-OPEN
-
-For important decisions provide:
-
-- question;
-- why it matters;
-- reasonable alternatives;
-- recommendation.
-
-Do not silently resolve the decision.
-
-## Boundary
-
-This skill defines:
-
-WHAT changes
-
-WHERE it changes
-
-WHAT the system must do
-
-WHAT is affected
-
-WHAT dependencies matter
-
-WHAT architectural impact exists
-
-It does not define:
-
-HOW the code is implemented
-
-Implementation details belong to the relevant Developer.
+1. **Current System Behavior**
+   - Inspect only evidence relevant to the Story:
+     - source code
+     - existing APIs
+     - existing tests
+     - architecture/system context
+     - relevant documentation, if available
+   - Describe observable current behavior.
+   - Classify evidence as:
+     - `FACT` — directly confirmed by repository evidence;
+     - `INFERENCE` — derived from available evidence;
+     - `CONTRADICTION` — current behavior conflicts with approved BA requirements.
+   - Do not present unsupported behavior as fact.
+
+2. **Required System Behavior**
+   - Translate approved Acceptance Criteria into system behavior.
+   - Identify only behavior required to satisfy the approved BA Analysis.
+   - Describe relevant:
+     - inputs and outputs;
+     - state changes;
+     - validation;
+     - error behavior.
+   - Do not invent behavior or redefine Acceptance Criteria.
+
+3. **Components Affected**
+   - Identify only components relevant to the required behavior.
+   - Consider, when applicable:
+     - frontend;
+     - backend/service;
+     - API;
+     - persistence;
+     - integrations;
+     - shared components.
+   - For each affected component, state why it is affected and what system-level behavior must change.
+   - Mark uncertain impact as `OPEN`.
+   - Do not identify file-, class-, or function-level implementation details.
+
+4. **Data & API Impact**
+   - Identify only relevant changes to:
+     - API behavior;
+     - request/response data;
+     - validation;
+     - persistence;
+     - data relationships;
+     - state transitions.
+   - Distinguish:
+     - `REQUIRED_CHANGE` — supported by approved requirements and system evidence;
+     - `ASSUMPTION` — necessary inference, not confirmed;
+     - `OPEN_DECISION` — unresolved and requiring human decision.
+   - Do not prescribe implementation details.
+
+5. **Architecture Impact**
+   - Assess whether the current architecture supports the required behavior.
+   - Classify:
+     - `NO_CHANGE` — current architecture supports the Story;
+     - `CHANGE_REQUIRED` — an architectural/component-level change is necessary;
+     - `OPEN` — evidence is insufficient to decide.
+   - If `CHANGE_REQUIRED`, describe the affected architectural areas and material trade-offs.
+   - Propose alternatives only when multiple viable approaches materially affect architecture, risk, or scope.
+
+6. **Implementation Map**
+   - Define the minimum implementation boundary for Developers at component level.
+   - Use:
+     | Component | Required change | Developer | Dependencies |
+     | --------- | --------------- | --------- | ------------ |
+   - State WHAT component behavior must change and WHERE at system/component level.
+   - Use `FE` or `BE` for Developer where applicable.
+   - Mark unknowns as `OPEN`.
+   - Do not prescribe classes, functions, files, algorithms, or code structure.
+
+7. **Risks & Trade-offs**
+   - Report only material risks or trade-offs introduced or affected by the Story.
+   - Consider when relevant:
+     - coupling;
+     - dependencies;
+     - data consistency;
+     - backward compatibility;
+     - scalability;
+     - maintainability;
+     - operational impact.
+   - Do not turn hypothetical concerns into requirements.
+   - If no material risks are identified, state that none were identified.
+
+8. **OPEN ISSUES**
+   - Report only unresolved information, ambiguity, contradiction, or decision that materially affects implementation, acceptance, architecture, or testability.
+   - For each issue:
+     - state the question/problem;
+     - state why it matters.
+   - Do not silently resolve it.
+   - Do not automatically provide alternatives or recommendations unless they are necessary for a meaningful human decision.
+
+## Scope Rules
+
+IN SCOPE:
+
+- current observable system behavior;
+- required system behavior derived from approved BA Analysis;
+- affected system components;
+- relevant API and data impact;
+- system-level architecture impact;
+- minimum implementation boundary;
+- material risks and trade-offs;
+- material OPEN issues.
+
+OUT OF SCOPE:
+
+- business requirement definition;
+- redefining Acceptance Criteria;
+- detailed solution design;
+- classes, functions, files, algorithms, or code structure;
+- implementation instructions;
+- documentation analysis;
+- unrelated refactoring;
+- hypothetical requirements.
+
+## Output
+
+Produce only the content required by the System Analyst Template Contract:
+
+- Current System Behavior
+- Required System Behavior
+- Components Affected
+- Data & API Impact
+- Architecture Impact
+- Implementation Map
+- Risks & Trade-offs
+- OPEN ISSUES
+
+Keep the analysis minimal and proportional to the Story. Do not add sections or analysis that does not materially help Developers or QA proceed safely.

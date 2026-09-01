@@ -1,31 +1,20 @@
 # Repository Copilot Instructions
 
-This repository is an AI SDLC experiment.
+This repository is an AI-SDLC experiment.
 
-Follow `AGENTS.md` as the global operating contract.
+Follow `AGENTS.md` for the shared AI-SDLC operating contract.
 
-## Project Rules
+## Repository-wide rules
 
-- Work from the current Story.
-- Treat project specifications as the source of truth.
-- Do not invent requirements.
-- Mark unknowns as `OPEN`.
+- Work from the current Story and approved specifications.
+- Do not invent requirements, behavior, or contracts.
+- Mark missing or conflicting information as `OPEN`.
 - Preserve traceability.
-- Respect the QA Quality Contract.
-- Keep changes scoped.
-- Prefer simple solutions.
-- Run relevant checks before declaring work complete.
-- Never claim a test passed without actually running or inspecting its evidence.
-- Never hide a failing check.
+- Keep changes within Story scope.
+- Prefer the smallest safe, maintainable change.
+- Run relevant validation before declaring work complete.
+- Never claim a check passed without evidence.
+- Never hide or weaken a failing check.
+- Do not expose or commit secrets.
 
-## AI Working Style
-
-Before making significant changes:
-1. Inspect the relevant repository files.
-2. Identify applicable requirements and constraints.
-3. State assumptions or open questions.
-4. Make the smallest appropriate change.
-5. Run relevant validation.
-6. Summarize evidence and remaining risks.
-
-Do not rewrite unrelated files just to improve style.
+These rules apply repository-wide. Use `AGENTS.md` for AI-SDLC workflow and ownership, path-specific instructions for directory-specific conventions, and skills for task-specific workflows.

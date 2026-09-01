@@ -1,127 +1,50 @@
 ---
 name: frontend-ui-implementation
-description: Implement an approved Human-provided UI Design Artifact in the frontend while preserving approved business and system behavior.
+description: Implement UI behavior from an approved Design Artifact while preserving business and system constraints.
 argument-hint: "[Story with UI Design Artifact]"
 ---
 
 # Frontend UI Implementation
 
-Use this skill when a Story contains an approved UI Design Artifact and the frontend must implement it.
+Use only when the Story has an approved UI Design Artifact.
 
-## Source of Truth
+## Flow
 
-The approved UI Design Artifact is the source of truth for defined UI and UX behavior.
+1. Inspect the Design Artifact.
+2. Identify defined screens, states, interactions, responsive behavior, and relevant accessibility requirements.
+3. Inspect existing design-system components and reuse them where appropriate.
+4. Implement only specified UI behavior.
+5. Validate defined states and interactions.
+6. Report material visual or behavioral deviations.
 
-Use it together with:
+## Boundaries
 
-- approved Acceptance Criteria;
-- approved System Analyst analysis;
-- approved Implementation Map.
-
-The design does not override approved business requirements or system constraints.
-
-## Design Interpretation
-
-Inspect the artifact and identify:
-
-- page or screen structure;
-- layout;
-- visual hierarchy;
-- components;
-- content;
-- states;
-- interactions;
-- validation behavior;
-- loading behavior;
-- success and error states;
-- responsive behavior when defined;
-- accessibility-related requirements when defined.
-
-Implement what is explicitly defined.
-
-Do not infer additional product behavior from visual appearance alone.
-
-## Existing Design Patterns
-
-Before creating UI:
-
-- inspect existing application components;
-- reuse established components and patterns;
-- follow existing spacing, typography, styling and interaction conventions;
-- avoid creating duplicate UI primitives.
-
-If the artifact intentionally differs from existing conventions, follow the approved artifact for the Story unless doing so conflicts with approved requirements.
+- The Design Artifact does not override approved business or system requirements.
+- Do not invent unspecified UI behavior.
+- Do not redesign the product.
+- Do not introduce a new design-system pattern when an existing one is suitable.
+- Do not perform a separate accessibility or visual-design audit unless assigned.
+- Report conflicts between design, requirements, and existing constraints as `OPEN`.
 
 ## States
 
-Do not implement only the ideal state when the approved design defines additional states.
+When defined or required by approved behavior, account for relevant:
 
-Consider all states explicitly represented by the artifact, such as:
-
-- initial;
 - loading;
-- validation error;
-- server error;
-- empty;
 - success;
-- disabled.
+- empty;
+- validation/error;
+- disabled;
+- responsive states.
 
-If a required state is not defined and cannot be determined from approved requirements, mark it as `OPEN` rather than inventing behavior.
+Do not invent additional product behavior.
 
-## Responsive Behavior
+## Output
 
-Implement responsive behavior only when:
+Report briefly:
 
-- it is explicitly defined by the artifact; or
-- it follows an already established application-wide convention.
+- UI behavior implemented;
+- relevant validation;
+- material deviations or `OPEN` issues.
 
-Do not invent new responsive behavior that changes product behavior.
-
-## Accessibility
-
-Preserve existing accessibility conventions and implement explicitly defined accessibility requirements.
-
-Do not claim accessibility compliance solely because semantic HTML was used.
-
-## Conflicts
-
-If the UI Design Artifact conflicts with:
-
-- Acceptance Criteria;
-- approved business behavior;
-- approved System Analyst analysis;
-- approved API behavior;
-
-do not choose one silently.
-
-Record:
-
-- the conflict;
-- affected behavior;
-- implementation impact;
-- proposed resolution if useful.
-
-Mark the issue `OPEN` and request human decision.
-
-## Visual Deviations
-
-If implementation cannot reproduce an approved design because of technical constraints:
-
-- document the deviation;
-- explain the reason;
-- describe the impact;
-- request human review when the deviation changes the approved UX.
-
-Do not silently replace the approved design with a different design.
-
-## Boundary
-
-This skill defines how to implement an approved UI design.
-
-It does not define:
-
-- how the UI should be designed;
-- business requirements;
-- architecture;
-- backend implementation;
-- QA strategy.
+Do not add unrelated analysis.

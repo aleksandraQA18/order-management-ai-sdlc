@@ -1,168 +1,51 @@
 ---
 name: backend-implementation
-description: Implement approved backend and service changes assigned to BE using the existing architecture, approved API contracts and Implementation Map.
+description: Implement approved backend API, service, and application behavior using existing architecture and the smallest safe change.
 argument-hint: "[Story]"
 ---
 
 # Backend Implementation
 
-Use this skill when implementing backend changes assigned to `BE`.
+Implement only the approved BE scope.
 
-## Inputs
+## Flow
 
-Use:
+1. Read relevant approved requirements, System Analysis, Implementation Map, and API contracts.
+2. Inspect affected code and existing patterns.
+3. Search for reusable services, repositories, schemas, validators, and utilities.
+4. Make the smallest safe change.
+5. Validate relevant behavior.
+6. Review the final diff.
 
-- approved Story;
-- approved Acceptance Criteria;
-- approved System Analyst analysis;
-- approved Implementation Map;
-- approved QA Quality Contract;
-- existing backend/service source code;
-- existing backend tests;
-- relevant architecture and repository documentation;
-- repository conventions.
+## API Contract
 
-Treat approved requirements and decisions as the source of backend behavior.
+Do not guess or change endpoints, methods, request/response fields, status codes, validation, error payloads, or auth/authz behavior.
 
-## Implementation Flow
-
-1. Inspect the relevant existing backend code before changing it.
-2. Identify affected services, modules, dependencies and boundaries.
-3. Understand existing implementation and architectural conventions.
-4. Identify the smallest maintainable implementation satisfying the approved behavior.
-5. Implement only backend changes assigned to `BE`.
-6. Integrate with approved API contracts.
-7. Implement required business logic and error handling.
-8. Apply approved data/persistence changes through the appropriate skill.
-9. Preserve existing behavior outside the approved Story scope.
-10. Run relevant backend checks.
-11. Review the resulting diff for unintended changes.
-12. Record implementation evidence and deviations.
-
-## Existing Code
-
-Prefer existing:
-
-- services;
-- modules;
-- domain logic;
-- repositories;
-- validation;
-- error handling;
-- configuration;
-- dependency patterns;
-- test utilities.
-
-Do not introduce a new pattern when an appropriate existing pattern already exists without a justified reason.
-
-Do not refactor unrelated code.
-
-## Scope
-
-The Implementation Map is the boundary of backend work.
-
-If implementation reveals that another component, frontend change or architectural change is required:
-
-- stop the affected work;
-- record the issue as `OPEN`;
-- explain the impact;
-- request human review.
-
-Do not silently expand the Story scope or modify the Implementation Map.
-
-## API Contracts
-
-Implement the API behavior and contracts approved in the Story and System
-Analyst analysis.
-
-Verify:
-
-- endpoint behavior;
-- request handling;
-- response behavior;
-- validation;
-- status codes;
-- relevant error behavior.
-
-If implementation reveals that the approved API contract is insufficient,
-ambiguous or incompatible with the existing system:
-
-- do not invent a new contract;
-- document the issue as `OPEN`;
-- explain the impact;
-- present reasonable alternatives when useful;
-- request human decision.
-
-Do not use this skill to define API tests. API test implementation remains outside the BE Developer scope.
+If required contract information is missing or conflicting, report `OPEN`.
 
 ## Business Logic
 
-Implement approved business rules and invariants.
+Implement approved business rules and invariants. Preserve established error-handling patterns and avoid leaking internal or sensitive details.
 
-Do not infer new business behavior from implementation convenience.
+## Reuse
 
-If a rule is ambiguous or contradictory:
-
-- do not guess;
-- record the issue as `OPEN`;
-- request human review.
-
-## Error Handling
-
-Preserve established error-handling patterns.
-
-Ensure approved failure behavior is represented where required.
-
-Do not expose internal implementation details or sensitive information through API errors.
-
-Do not introduce generic error handling that hides meaningful failures.
+Search before creating new backend abstractions. Prefer reuse or extension when it preserves architecture and behavior.
 
 ## Dependencies
 
-When adding or changing dependencies:
+Avoid unnecessary dependencies. Add one only when materially required by the Story and compatible with the project.
 
-- prefer existing repository dependencies where suitable;
-- avoid unnecessary dependencies;
-- consider compatibility and maintenance impact;
-- record meaningful dependency changes.
+## Scope
 
-Do not introduce infrastructure changes outside the approved scope.
+No frontend changes, unrelated refactoring, invented behavior, or unapproved contract/architecture changes.
 
-## Code Quality
+## Validation
 
-The implementation should:
+Run only relevant checks. Never bypass or weaken a failing check.
 
-- follow repository conventions;
-- remain maintainable;
-- preserve type safety where applicable;
-- minimize duplication;
-- avoid unnecessary abstraction;
-- avoid unrelated refactoring;
-- preserve behavior outside the approved change.
+## Output
 
-Choose the simplest implementation that satisfies the approved requirements.
-
-## Evidence
-
-Record evidence for:
-
-- implemented backend changes;
-- relevant checks;
-- unit tests;
-- build/static checks where applicable;
-- deviations and limitations.
-
-Never claim a check passed unless it actually ran.
-
-## Boundary
-
-This skill defines how to implement approved backend behavior.
-
-It does not define:
-
-- business requirements;
-- system architecture;
-- API test strategy;
-- integration/E2E test implementation;
-- QA verification strategy;
-- frontend implementation.
+Report:
+- changes;
+- checks/tests and results;
+- `OPEN` issues or deviations.
