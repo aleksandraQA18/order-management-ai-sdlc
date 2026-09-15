@@ -1,74 +1,47 @@
 ---
 name: qa-heuristics
-description: Perform targeted heuristic risk discovery for a Story and map material findings to QA risks and Verification Targets.
+description: Apply focused QA heuristics to identify meaningful negative, boundary, state, integration, and data risks for the current Story.
 argument-hint: "[Story]"
 ---
 
 # QA Heuristics
 
-Use only when additional heuristic discovery can reveal material risk not already covered by QA Analysis.
+Use these heuristics selectively to improve verification quality.
 
-## Inputs
+## Check
 
-- approved Acceptance Criteria;
-- approved BA/SA analysis;
-- relevant UI artifact;
-- relevant implementation evidence.
+Consider only heuristics relevant to the Story:
 
-## Selection
+- invalid input;
+- missing required data;
+- boundary values;
+- zero/empty values;
+- state transitions;
+- duplicate operations;
+- persistence and data integrity;
+- API contract behavior;
+- integration failures;
+- consistency between created and retrieved data;
+- existing regression impact.
 
-Select only relevant families:
-- Input & Boundary
-- State & Lifecycle
-- Workflow
-- Integration
-- Data
-- Authorization
-- Concurrency & Timing
-- Error Handling
-- Regression
+## Existing Tests
 
-Do not run the checklist mechanically.
+Compare these risks against existing tests.
 
-## Method
+Prefer:
+- extending an existing test when it already exercises the relevant path;
+- adding a focused test when the behavior is missing;
+- updating an existing test when the approved Story changes expected behavior.
 
-`Heuristic → focused question → evidence → Finding → Risk → Verification Target`
+## Avoid
 
-Record a finding only when it materially affects quality.
-
-## Evidence
-
-Use:
-- `FACT` — directly supported by evidence;
-- `INFERENCE` — reasonable deduction;
-- `PROPOSAL` — suggested verification, not a requirement.
-
-Never convert a proposal into a business requirement.
-
-## Risk
-
-Use `HIGH`, `MEDIUM`, or `LOW` based on impact and likelihood. Keep rationale short.
-
-## Verification Target
-
-Use:
-
-`VT-XX: [observable behavior]`
-
-Do not generate test cases or implementation instructions.
+Do not:
+- generate exhaustive edge cases without evidence they matter;
+- repeat the same risk in multiple QA sections;
+- turn generic testing advice into Story-specific requirements;
+- prescribe implementation details;
+- require manual testing when automation provides sufficient evidence.
 
 ## Output
 
-Produce exactly:
-
-```text
-# Heuristic Findings
-
-## Findings
-- H-01: [FACT/INFERENCE/PROPOSAL] [finding] | Risk: [LOW/MEDIUM/HIGH] | VT: [VT-XX]
-
-## Questions / OPEN
-- [material unresolved question, or None]
-```
-
-Do not duplicate existing QA Analysis findings unless new evidence materially changes the assessment.
+Use the heuristics to improve the QA Analysis. Do not add a separate heuristics section to the Story.

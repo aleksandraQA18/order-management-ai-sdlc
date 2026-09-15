@@ -1,158 +1,98 @@
 ---
 name: qa-analysis
-description: Define the minimum risk-based verification strategy and Quality Contract for a Story across API, integration, and E2E levels.
+description: Produce a concise, automation-first QA Analysis for the current Story and assess existing tests for reuse, extension, correction, or gaps.
 argument-hint: "[Story]"
 ---
 
 # QA Analysis
 
-Convert approved requirements and system analysis into the minimum verification needed for sufficient quality confidence.
+Produce the QA Analysis defined by the QA Agent.
 
-## Inputs
+## Analysis Flow
 
-- approved BA Analysis and Acceptance Criteria;
-- approved System Analyst Analysis;
-- relevant UI Design Artifact;
-- relevant implementation, tests, and CI evidence when available.
+1. Read the approved BA Analysis and System Analysis.
+2. Inspect the relevant implementation and existing tests.
+3. Determine what existing tests already cover the Story.
+4. Decide which existing tests should be reused, extended, updated, or left unchanged.
+5. Identify missing material verification.
+6. Choose the most valuable test levels.
+7. Decide whether BDD adds communication value.
+8. Define regression scope.
+9. Define the minimum evidence required by the Quality Contract.
 
-Read only what is relevant to the Story.
+## BDD Scenarios
 
-## Flow
+Use `bdd-scenarios` only when complex business behavior, multiple rules, exceptions, or decision paths make concrete examples useful for shared understanding.
 
-1. Map Acceptance Criteria to observable behavior.
-2. Identify material risks using impact and likelihood.
-3. Define Verification Targets for behaviors/risks requiring evidence.
-4. Select the lowest sufficient test level:
-   - `API`: API behavior, validation, contracts, errors.
-   - `INTEGRATION`: real infrastructure, persistence, service boundaries, cross-component behavior.
-   - `E2E`: critical user journeys/cross-system behavior not sufficiently covered below.
-5. Define minimum evidence and automation mode.
-6. Derive focused regression scope from changed components, dependencies, contracts, and critical journeys.
-7. Produce the Quality Contract.
+BDD should describe WHAT the system does, not HOW it is implemented.
 
-## Risk Rules
+Do not generate BDD for simple behavior when ordinary verification scenarios are sufficient.
 
-Use `HIGH`, `MEDIUM`, or `LOW`, based on impact and likelihood.
+## Automation Tests
 
-Report only material risks. Keep rationale short and evidence-based.
+Prioritize:
+- API tests for backend behavior and contracts;
+- integration tests for cross-component behavior and persistence/data integrity;
+- E2E only for meaningful user journeys or frontend integration.
 
-## Verification Targets
+For existing tests, explicitly classify relevant coverage as:
+- `REUSE`
+- `EXTEND`
+- `UPDATE`
+- `NO_CHANGE`
+- `MISSING`
 
-Format:
+Only include classifications that matter to the current Story.
 
-`VT-XX: [observable behavior] | AC: [AC-XX] | Risk: [R-XX] | Level: [API/INTEGRATION/E2E] | Evidence: [minimum evidence]`
+Include negative and boundary cases when they materially verify the requirements.
 
-Create targets only where verification provides meaningful confidence.
+## Manual Tests
 
-## Test-Level Rules
+Include manual verification only when it provides evidence that automation cannot reasonably provide, such as:
+- exploratory investigation;
+- visual/usability behavior when relevant;
+- environment-specific behavior;
+- one-off checks that are not worth automating.
 
-Prefer the lowest sufficient level.
+Do not invent manual tests just to have manual coverage.
 
-Use integration testing when real infrastructure behavior is part of the risk; use Testcontainers when appropriate.
+## Test Strategy
 
-Use E2E only for critical journeys or behavior that lower levels cannot sufficiently verify.
+Describe the verification approach, not the acceptance criteria again.
 
-Do not repeat the same verification at multiple levels without a risk-based reason.
-
-## Automation
-
-For each target choose:
-- `AUTOMATED`
-- `MANUAL`
-- `NOT_REQUIRED`
-
-State only a short rationale. Do not prescribe framework-level implementation.
+State:
+- primary test level;
+- supporting test levels;
+- automation priority;
+- whether manual testing adds value.
 
 ## Regression
 
-Keep regression focused on changed behavior and its dependencies. Require full regression only when risk justifies it.
-
-## BDD
-
-BDD is optional. Use it only when examples materially clarify critical business behavior, high-risk rules, meaningful negative behavior, or important cross-component flows.
+Select the smallest existing behavior set that could realistically be affected.
 
 ## Quality Contract
 
-```text
-## QA Quality Contract
+Define the minimum evidence needed to say the Story is adequately verified.
 
-### Verification Targets
-- VT-01: ...
+It should answer:
 
-### Risk
-- R-01: HIGH — ...
+> What must be true before QA can consider this Story verified?
 
-### Test Levels
-- API: ...
-- INTEGRATION: ...
-- E2E: ...
+Typical evidence:
+- all material verification scenarios have evidence;
+- required automated tests pass;
+- relevant regression tests pass;
+- no material QA gaps remain unresolved.
 
-### Required Evidence
-- ...
-
-### Regression Scope
-- ...
-
-### Quality Gate
-- PASS criteria: ...
-- FAIL criteria: ...
-- OPEN conditions: ...
-```
-
-The Quality Contract defines minimum evidence, not every possible test.
+Do not use a fixed coverage percentage.
 
 ## Output
 
 Produce exactly:
 
-```text
-# QA Analysis
-
-## Risks
-- R-01: [LOW/MEDIUM/HIGH] — [short rationale]
-
-## Verification Targets
-- VT-01: [observable behavior] | AC: [AC-XX] | Risk: [R-XX] | Level: [API/INTEGRATION/E2E] | Evidence: [minimum evidence]
-
-## Coverage Gaps
-- [material gap, or None identified]
-
-## Automation Strategy
-- VT-XX: [AUTOMATED/MANUAL/NOT_REQUIRED] — [short rationale]
-
-## Regression Scope
-- [focused scope, or None beyond current verification]
-
-## QA Quality Contract
-
-### Verification Targets
-- VT-01: ...
-
-### Risk
-- R-01: ...
-
-### Test Levels
-- API: ...
-- INTEGRATION: ...
-- E2E: ...
-
-### Required Evidence
-- ...
-
-### Regression Scope
-- ...
-
-### Quality Gate
-- PASS criteria: ...
-- FAIL criteria: ...
-- OPEN conditions: ...
-```
-
-Do not add sections.
-
-## Constraints
-
-- Start from approved requirements, not implementation assumptions.
-- Do not redefine requirements or prescribe implementation.
-- Do not invent risks, targets, or tests.
-- Keep analysis minimal and proportional to risk.
+### BDD Scenarios
+### Automation Tests
+### Manual Tests
+### Test Strategy
+### Regression
+### Quality Contract
