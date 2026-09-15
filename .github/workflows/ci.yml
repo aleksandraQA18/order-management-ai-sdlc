@@ -71,6 +71,7 @@ jobs:
           DB_NAME: orders
           DB_USER: order_user
           DB_PASSWORD: order_password
+          PYTHONPATH: backend
         run: pytest -v
 
   container-test:
