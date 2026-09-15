@@ -1,18 +1,11 @@
-import os
-
-import psycopg
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-app = FastAPI()
+from app.api.routes.products import router as products_router
+from app.database import check_database_connection
 
-conn = psycopg.connect(
-    host=os.getenv("DB_HOST"),
-    port=os.getenv("DB_PORT"),
-    dbname=os.getenv("DB_NAME"),
-    user=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-)
+app = FastAPI()
+app.include_router(products_router)
 
 
 @app.get("/")
@@ -27,12 +20,6 @@ def health_check():
 
 @app.get("/ready")
 def readiness_check():
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT 1")
+    if check_database_connection():
         return {"status": "ready"}
-    except Exception:
-        return JSONResponse(
-            status_code=503,
-            content={"status": "not ready"},
-        )
+    return JSONResponse(status_code=503, content={"status": "not ready"})
