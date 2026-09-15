@@ -1,7 +1,5 @@
 # STORY-XXX — [Title]
 
-## Story
-
 # Business Analysis
 
 ## Story Core
@@ -35,62 +33,75 @@ Artifact:
 
 ---
 
-## System Analyst Analysis
-
-## System Behavior
-
-[What the system must do]
+# System Analysis
 
 ## Implementation Map
 
-[Backend / DB / Frontend / API]
-
 | Component | Required change | Developer | Dependencies |
 | --------- | --------------- | --------- | ------------ |
-|           |                 | `FE / BE` |              |
-
-## Data & API Impact
-
-[New model? New endpoint? Changes?]
+|           |                 |           |              |
 
 ## Architecture Impact
 
-NO_CHANGE / CHANGE_REQUIRED
+**Status:** `NO_CHANGE` / `CHANGE_REQUIRED` / `OPEN`
 
-## Risks & Trade-offs
+[Only material architectural impact.]
 
-[Technical risks]
+## Material Decisions
 
-## Recommendation
-
-[SA recommendation]
-
----
-
-## QA Analysis
-
-## Critical Behavior
-
-[What must never break]
+- [Decision] — `OPEN` — [Why it materially affects implementation]
+- None
 
 ## Risks
 
-[Quality risks]
-
-## BDD Scenarios
-
-Given  
-When  
-Then
-
-## Test Levels
-
-[Unit / Integration / E2E]
-
-## Regression Impact
-
-[What existing areas may break]
+- [Material system-level risk]
+- None
 
 ---
 
-**Final status:** `OPEN`
+# QA Analysis
+
+## BDD Scenarios
+
+[Include only when the Story contains complex business behavior, multiple rules, exceptions, or decision paths where concrete examples improve shared understanding.]
+
+Not required.
+
+## Automation Tests
+
+| Status                            | Scenario | Level                   | Purpose |
+| --------------------------------- | -------- | ----------------------- | ------- |
+| REUSE / EXTEND / UPDATE / MISSING |          | API / Integration / E2E |         |
+
+[Include only material verification scenarios.]
+
+## Manual Tests
+
+[Only manual verification that provides value beyond automation.]
+
+Not required.
+
+## Test Strategy
+
+**Primary level:** API / Integration / E2E / Manual
+
+**Supporting levels:**
+
+**Approach:**
+
+[Describe how the Story should be verified. Do not repeat Acceptance Criteria.]
+
+## Regression
+
+[Smallest existing behavior set that could realistically be affected.]
+
+None identified.
+
+## Quality Contract
+
+The Story is adequately verified when:
+
+- [ ] All material verification scenarios have evidence.
+- [ ] Required automated tests pass.
+- [ ] Relevant regression tests pass.
+- [ ] No material QA gaps remain unresolved.
