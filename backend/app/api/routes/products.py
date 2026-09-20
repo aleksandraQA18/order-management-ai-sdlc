@@ -1,13 +1,19 @@
+"""API routes for product management.
+
+These endpoints form the main public interface of the backend: creating new
+products and fetching product records from the database.
+"""
+
 from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Product
 from app.schemas.products import ProductCreate, ProductResponse
+from app.services.products import create_product, get_product_by_id, list_products
 
 router = APIRouter()
 
@@ -17,42 +23,31 @@ router = APIRouter()
     response_model=ProductResponse,
     status_code=status.HTTP_201_CREATED,
 )
-def create_product(
+def create_product_route(
     product: ProductCreate,
     db: Annotated[Session, Depends(get_db)],
 ) -> Product:
-    db_product = Product(**product.model_dump())
-    try:
-        db.add(db_product)
-        db.commit()
-        db.refresh(db_product)
-    except Exception:
-        db.rollback()
-        raise
-    return db_product
+    """Create a new product record and persist it to the database."""
+    return create_product(db, product)
 
 
 @router.get("/api/products", response_model=list[ProductResponse])
-def get_products(
+def get_products_route(
     db: Annotated[Session, Depends(get_db)],
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1, le=100),
 ) -> list[Product]:
-    statement = (
-        select(Product)
-        .order_by(Product.id)
-        .offset((page - 1) * page_size)
-        .limit(page_size)
-    )
-    return list(db.scalars(statement).all())
+    """Return a paginated list of products in a stable order."""
+    return list_products(db, page=page, page_size=page_size)
 
 
 @router.get("/api/products/{product_id}", response_model=ProductResponse)
-def get_product(
+def get_product_route(
     product_id: UUID,
     db: Annotated[Session, Depends(get_db)],
 ) -> Product:
-    product = db.get(Product, product_id)
+    """Fetch a single product by ID or return a 404 response when missing."""
+    product = get_product_by_id(db, product_id)
     if product is None:
         raise HTTPException(status_code=404, detail="Product not found")
     return product

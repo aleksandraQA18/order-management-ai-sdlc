@@ -1,3 +1,9 @@
+"""Order ORM model for the sales workflow.
+
+This model represents a customer order and tracks the item, quantity, and order
+status in the database.
+"""
+
 from uuid import UUID, uuid4
 
 from sqlalchemy import String
@@ -7,6 +13,8 @@ from .base import Base
 
 
 class Order(Base):
+    """Customer order record stored in the orders table."""
+
     __tablename__ = "orders"
 
     id: Mapped[UUID] = mapped_column(
