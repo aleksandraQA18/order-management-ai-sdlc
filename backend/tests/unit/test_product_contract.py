@@ -1,3 +1,5 @@
+from collections.abc import Generator
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -10,7 +12,7 @@ from main import create_app
 
 
 @pytest.fixture
-def client() -> TestClient:
+def client() -> Generator[TestClient, None, None]:
     engine = create_engine(
         "sqlite://",
         connect_args={"check_same_thread": False},
@@ -20,7 +22,7 @@ def client() -> TestClient:
 
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-    def override_get_db() -> Session:
+    def override_get_db() -> Generator[Session, None, None]:
         db = TestingSessionLocal()
         try:
             yield db
@@ -39,7 +41,10 @@ def client() -> TestClient:
 def test_create_product_contract(client: TestClient) -> None:
     payload = {
         "name": "API Testing Fundamentals",
-        "description": "Hands-on course covering API testing principles and practical workflows",
+        "description": (
+            "Hands-on course covering API testing principles and practical "
+            "workflows"
+        ),
         "quantity": 5,
         "category": "QA Courses",
         "price": 89.99,

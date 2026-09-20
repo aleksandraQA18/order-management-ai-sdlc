@@ -17,7 +17,10 @@ class ProductCreate(BaseModel):
         json_schema_extra={
             "example": {
                 "name": "API Testing Fundamentals",
-                "description": "Hands-on course covering API testing principles and practical workflows",
+                "description": (
+                    "Hands-on course covering API testing principles and "
+                    "practical workflows"
+                ),
                 "quantity": 10,
                 "category": "QA Courses",
                 "price": 89.99,
@@ -28,7 +31,10 @@ class ProductCreate(BaseModel):
     name: str = Field(examples=["API Testing Fundamentals"])
     description: str = Field(
         examples=[
-            "Hands-on course covering API testing principles and practical workflows"
+            (
+                "Hands-on course covering API testing principles and "
+                "practical workflows"
+            )
         ]
     )
     quantity: int = Field(default=0, ge=0, examples=[10])
@@ -45,7 +51,10 @@ class ProductResponse(ProductCreate):
             "example": {
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 "name": "API Testing Fundamentals",
-                "description": "Hands-on course covering API testing principles and practical workflows",
+                "description": (
+                    "Hands-on course covering API testing principles and "
+                    "practical workflows"
+                ),
                 "quantity": 10,
                 "category": "QA Courses",
                 "price": 89.99,

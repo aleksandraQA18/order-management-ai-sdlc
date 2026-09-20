@@ -18,7 +18,10 @@ def test_create_product_persists_product_and_calculates_stock_status() -> None:
     with _build_session() as db:
         payload = ProductCreate(
             name="API Testing Fundamentals",
-            description="Hands-on course covering API testing principles and practical workflows",
+            description=(
+                "Hands-on course covering API testing principles and "
+                "practical workflows"
+            ),
             quantity=5,
             category="QA Courses",
             price=Decimal("89.99"),
