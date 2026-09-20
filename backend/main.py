@@ -21,19 +21,19 @@ def create_app() -> FastAPI:
 app = create_app()
 
 
-@app.get("/")
+@app.get("/", tags=["Health"])
 def read_root():
     """Simple welcome endpoint for the API."""
     return {"message": "QA Academy API is running"}
 
 
-@app.get("/health")
+@app.get("/health", tags=["Health"])
 def health_check():
     """Basic health endpoint used to confirm the service is alive."""
     return {"status": "OK"}
 
 
-@app.get("/ready")
+@app.get("/ready", tags=["Health"])
 def readiness_check():
     """Checks whether the API can talk to the configured database."""
     if check_database_connection():

@@ -22,6 +22,7 @@ router = APIRouter()
     "/api/products",
     response_model=ProductResponse,
     status_code=status.HTTP_201_CREATED,
+    tags=["Products"],
 )
 def create_product_route(
     product: ProductCreate,
@@ -36,6 +37,7 @@ def get_products_route(
     db: Annotated[Session, Depends(get_db)],
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1, le=100),
+    tags=["Products"],
 ) -> list[Product]:
     """Return a paginated list of products in a stable order."""
     return list_products(db, page=page, page_size=page_size)
@@ -45,6 +47,7 @@ def get_products_route(
 def get_product_route(
     product_id: UUID,
     db: Annotated[Session, Depends(get_db)],
+    tags=["Products"],
 ) -> Product:
     """Fetch a single product by ID or return a 404 response when missing."""
     product = get_product_by_id(db, product_id)
