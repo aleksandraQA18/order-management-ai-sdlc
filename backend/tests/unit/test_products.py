@@ -1,3 +1,9 @@
+"""Unit tests covering product validation and stock status behavior.
+
+These checks document the expected business rules for product creation so the
+application remains predictable as the catalog evolves.
+"""
+
 from decimal import Decimal
 
 import pytest
@@ -8,6 +14,7 @@ from app.schemas.products import ProductCreate
 
 
 def make_product_create(**overrides: object) -> ProductCreate:
+    """Build a valid product payload with optional overrides for targeted tests."""
     values: dict[str, object] = {
         "name": "Desk",
         "description": "Wooden desk",
@@ -36,6 +43,7 @@ def test_product_stock_status_is_derived_from_quantity(
     quantity: int,
     expected_status: str,
 ) -> None:
+    """Stock state should reflect whether the quantity is above zero."""
     product = Product(
         name="Desk",
         description="Wooden desk",
@@ -49,15 +57,18 @@ def test_product_stock_status_is_derived_from_quantity(
 
 @pytest.mark.parametrize("price", [Decimal("0"), Decimal("-1.00")])
 def test_product_create_rejects_non_positive_price(price: Decimal) -> None:
+    """Prices must always be greater than zero."""
     with pytest.raises(ValidationError):
         make_product_create(price=price)
 
 
 def test_product_create_rejects_price_with_more_than_two_decimal_places() -> None:
+    """Currency values are limited to two decimal places to match pricing rules."""
     with pytest.raises(ValidationError):
         make_product_create(price=Decimal("19.999"))
 
 
 def test_product_create_rejects_negative_quantity() -> None:
+    """Inventory counts cannot go below zero."""
     with pytest.raises(ValidationError):
         make_product_create(quantity=-1)
