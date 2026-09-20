@@ -1,4 +1,4 @@
-"""FastAPI application entry point for the order management backend.
+"""FastAPI application entry point for the QA Academy backend.
 
 This file wires together the API routes and exposes simple readiness endpoints
 that are useful for local development, health checks, and deployment probes.
@@ -13,7 +13,7 @@ from app.database import check_database_connection
 
 def create_app() -> FastAPI:
     """Build the application and register the routes for each startup."""
-    app = FastAPI(title="Order Management API")
+    app = FastAPI(title="QA Academy API")
     app.include_router(products_router)
     return app
 
@@ -24,7 +24,7 @@ app = create_app()
 @app.get("/")
 def read_root():
     """Simple welcome endpoint for the API."""
-    return {"message": "Order Management API is running"}
+    return {"message": "QA Academy API is running"}
 
 
 @app.get("/health")
