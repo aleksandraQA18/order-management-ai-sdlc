@@ -42,8 +42,7 @@ def test_create_product_contract(client: TestClient) -> None:
     payload = {
         "name": "API Testing Fundamentals",
         "description": (
-            "Hands-on course covering API testing principles and practical "
-            "workflows"
+            "Hands-on course covering API testing principles and practical workflows"
         ),
         "quantity": 5,
         "category": "QA Courses",

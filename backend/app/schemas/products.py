@@ -31,10 +31,7 @@ class ProductCreate(BaseModel):
     name: str = Field(examples=["API Testing Fundamentals"])
     description: str = Field(
         examples=[
-            (
-                "Hands-on course covering API testing principles and "
-                "practical workflows"
-            )
+            ("Hands-on course covering API testing principles and practical workflows")
         ]
     )
     quantity: int = Field(default=0, ge=0, examples=[10])
