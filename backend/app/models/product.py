@@ -1,3 +1,9 @@
+"""Product ORM model for the QA Academy course catalogue.
+
+This model represents the public product catalog and enforces the pricing rules
+required by the approved business concept.
+"""
+
 from decimal import Decimal
 from uuid import UUID, uuid4
 
@@ -8,11 +14,10 @@ from .base import Base
 
 
 class Product(Base):
+    """Course catalog item stored in the products table."""
+
     __tablename__ = "products"
-    __table_args__ = (
-        CheckConstraint("quantity >= 0", name="ck_products_quantity_non_negative"),
-        CheckConstraint("price > 0", name="ck_products_price_positive"),
-    )
+    __table_args__ = (CheckConstraint("price > 0", name="ck_products_price_positive"),)
 
     id: Mapped[UUID] = mapped_column(
         primary_key=True,
@@ -26,10 +31,6 @@ class Product(Base):
         String,
         nullable=False,
     )
-    quantity: Mapped[int] = mapped_column(
-        default=0,
-        nullable=False,
-    )
     category: Mapped[str] = mapped_column(
         String,
         nullable=False,
@@ -38,7 +39,3 @@ class Product(Base):
         Numeric(12, 2),
         nullable=False,
     )
-
-    @property
-    def stock_status(self) -> str:
-        return "in_stock" if self.quantity and self.quantity > 0 else "out_of_stock"

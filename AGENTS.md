@@ -32,15 +32,28 @@ Agents must follow that structure and must not silently add requirements or deci
 
 ## Ownership
 
-| Agent | Owns |
-|---|---|
-| Business Analyst | business intent and Acceptance Criteria |
-| System Analyst | system behavior, API/data impact, architecture impact, Implementation Map |
-| QA | risks, verification strategy, Quality Contract |
-| FE Developer | frontend implementation and frontend unit/component tests |
-| BE Developer | backend/service implementation and backend unit tests |
+| Agent            | Owns                                                                      |
+| ---------------- | ------------------------------------------------------------------------- |
+| Business Analyst | business intent and Acceptance Criteria                                   |
+| System Analyst   | system behavior, API/data impact, architecture impact, Implementation Map |
+| QA               | risks, verification strategy, Quality Contract                            |
+| FE Developer     | frontend implementation and frontend unit/component tests                 |
+| BE Developer     | backend/service implementation and backend unit tests                     |
 
 An agent may identify an issue outside its ownership but must escalate rather than make the decision.
+
+## Implementation Planning Requirement
+
+Before implementing a feature, the FE Developer and BE Developer must first prepare a brief implementation plan covering:
+
+- the affected files and components;
+- the main technical steps to be taken;
+- any API, data, or UI impacts;
+- the validation approach for the change.
+
+This plan must be reviewed and confirmed by Human approval before implementation begins.
+
+Implementation must not start before the Human confirms the plan.
 
 ## Human Review
 
@@ -87,6 +100,7 @@ FE and BE may work in parallel when their approved scopes are independent.
 - Prefer the lowest effective test level.
 - Do not create automation only to increase test count.
 - Do not hide failures by weakening assertions or adding unlimited retries.
+- When generating new code, always add clear comments or docstrings that explain the purpose and key logic.
 - Never expose or commit secrets.
 - If implementation reveals information that changes an approved decision, stop and request Human Review.
 

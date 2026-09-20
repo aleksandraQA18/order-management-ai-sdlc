@@ -1,18 +1,18 @@
-# STORY-MS-001 — Product Data Model and API
+# STORY-MS-001 — Course Product Catalog Entry
 
 # Business Analysis
 
 ## Story Core
 
-**As a** order management system  
-**I want** to store and manage product information (name, description, quantity, category, price)  
-**So that** products can be discovered, purchased, and tracked in the order management workflow
+**As a** QA Academy platform administrator  
+**I want** to store and manage course catalog entries with a name, description, category, and price  
+**So that** learners can discover and purchase relevant QA education offerings
 
 ## Acceptance Criteria (max 3)
 
-AC-01: A product record with name, description, quantity, category, and price can be created and retrieved by the system  
+AC-01: A course/product record with name, description, category, and price can be created and retrieved by the system  
 AC-02: Product price must be a positive decimal value in PLN currency with appropriate precision  
-AC-03: Product stock status is determined by quantity: in stock when quantity > 0, out of stock when quantity = 0, initial value is 0
+AC-03: Product records must not include inventory or stock-status fields; availability is managed through purchase and course access logic rather than quantity
 
 ### UI Design Artifact
 
@@ -34,29 +34,29 @@ Required: NO
 
 ## Implementation Map
 
-| Component           | Required change                                                                                   | Developer | Dependencies                        |
-| ------------------- | ------------------------------------------------------------------------------------------------- | --------- | ----------------------------------- |
-| Product persistence | Add storage for product data: `id` (UUID), name, description, quantity, category, price (decimal) | BE        | Existing database/persistence layer |
-| Product API         | POST `/api/products` to create; GET `/api/products/{id}` to retrieve by UUID                      | BE        | Product persistence                 |
-| Product validation  | Enforce: positive PLN price (2 decimal places), non-negative quantity, initial quantity = 0       | BE        | Product API, persistence            |
-| Stock status        | Provide computed status derived from quantity: `in_stock` when > 0, `out_of_stock` when = 0       | BE        | Product quantity                    |
+| Component           | Required change                                                                                        | Developer | Dependencies                        |
+| ------------------- | ------------------------------------------------------------------------------------------------------ | --------- | ----------------------------------- |
+| Product persistence | Add storage for product data: `id` (UUID), name, description, category, price (decimal)                | BE        | Existing database/persistence layer |
+| Product API         | POST `/api/products` to create; GET `/api/products/{id}` to retrieve by UUID                           | BE        | Product persistence                 |
+| Product validation  | Enforce: positive PLN price (2 decimal places); reject unexpected inventory fields                     | BE        | Product API, persistence            |
+| Availability model  | No quantity or `stock_status` field in the product contract; course access is handled by purchase flow | BE        | Purchase/access logic               |
 
 ## Architecture Impact
 
 **Status:** `CHANGE_REQUIRED`
 
-Additive change within the existing backend architecture. No new architectural pattern is required.
+This change removes stale inventory semantics and brings the backend in line with the QA Academy course marketplace concept. No new architectural pattern is required.
 
 ## Material Decisions
 
 - **Product ID Strategy:** UUID (universally unique identifier)
 - **Product Retrieval:** `GET /api/products/{id}` where `{id}` is a UUID
 - **Price Precision:** 2 decimal places (standard for PLN currency, e.g., 9,99 PLN)
-- **Availability Computation:** Derived as read-only property from quantity (not persisted)
+- **Product Contract:** course catalogue metadata only; no inventory quantity or stock-status field
 
 ## Risks
 
-- None identified for these resolved decisions.
+- None identified for the current approved scope, provided the stale inventory fields are not reintroduced.
 
 ---
 
@@ -68,17 +68,16 @@ Not required — regular verification scenarios are sufficient.
 
 ### Automation Tests
 
-| Status | Scenario                                       | Level             |
-| ------ | ---------------------------------------------- | ----------------- |
-| New    | Create product with valid data                 | API               |
-| New    | Reject zero or negative price                  | API               |
-| New    | Accept valid PLN price with required precision | API / Integration |
-| New    | Default quantity to 0                          | API / Integration |
-| New    | Derive stock status from quantity              | API               |
-| New    | Retrieve created product by UUID               | API               |
-| New    | Return not-found for unknown product           | API               |
-| New    | Validate required product data                 | API               |
-| New    | Verify persisted product data                  | Integration       |
+| Status | Scenario                                              | Level             |
+| ------ | ----------------------------------------------------- | ----------------- |
+| New    | Create product with valid course metadata             | API               |
+| New    | Reject zero or negative price                         | API               |
+| New    | Accept valid PLN price with required precision        | API / Integration |
+| New    | Reject unexpected inventory fields such as `quantity` | API               |
+| New    | Retrieve created product by UUID                      | API               |
+| New    | Return not-found for unknown product                  | API               |
+| New    | Validate required product data                        | API               |
+| New    | Verify persisted product data                         | Integration       |
 
 ### Manual Tests
 
@@ -90,7 +89,7 @@ Automated API and integration tests provide sufficient deterministic evidence fo
 
 API-first, automation-first.
 
-- API tests verify product creation, retrieval, validation and stock status.
+- API tests verify product creation, retrieval, validation, and course metadata behavior.
 - Integration tests verify persistence and data integrity.
 - E2E is not required because no UI is in scope.
 - Manual testing is not required unless exploratory testing reveals an issue that cannot be adequately verified through automation.
