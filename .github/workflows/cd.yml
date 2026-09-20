@@ -16,6 +16,9 @@ permissions:
 jobs:
   publish-image:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [products-api]
 
     steps:
       - name: Checkout
@@ -29,7 +32,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build image
-        run: docker compose -f compose.yml build
+        run: |
+          docker build \
+            --tag ghcr.io/aleksandraqa18/${{ matrix.service }}:${{ github.sha }} \
+            --tag ghcr.io/aleksandraqa18/${{ matrix.service }}:latest \
+            ./backend
 
       - name: Push image
-        run: docker push ghcr.io/aleksandraqa18/order-management-ai-sdlc:latest
+        run: docker push ghcr.io/aleksandraqa18/${{ matrix.service }} --all-tags
