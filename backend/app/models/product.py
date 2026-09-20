@@ -1,7 +1,7 @@
-"""Product ORM model and inventory rules.
+"""Product ORM model for the QA Academy course catalogue.
 
-This model represents the main catalog item in the system and includes simple
-business constraints such as non-negative quantity and positive price.
+This model represents the public product catalog and enforces the pricing rules
+required by the approved business concept.
 """
 
 from decimal import Decimal
@@ -14,14 +14,10 @@ from .base import Base
 
 
 class Product(Base):
-    """Catalog item stored in the products table."""
+    """Course catalog item stored in the products table."""
 
     __tablename__ = "products"
-    __table_args__ = (
-        # Prevent invalid stock values and impossible pricing during database writes.
-        CheckConstraint("quantity >= 0", name="ck_products_quantity_non_negative"),
-        CheckConstraint("price > 0", name="ck_products_price_positive"),
-    )
+    __table_args__ = (CheckConstraint("price > 0", name="ck_products_price_positive"),)
 
     id: Mapped[UUID] = mapped_column(
         primary_key=True,
@@ -35,10 +31,6 @@ class Product(Base):
         String,
         nullable=False,
     )
-    quantity: Mapped[int] = mapped_column(
-        default=0,
-        nullable=False,
-    )
     category: Mapped[str] = mapped_column(
         String,
         nullable=False,
@@ -47,8 +39,3 @@ class Product(Base):
         Numeric(12, 2),
         nullable=False,
     )
-
-    @property
-    def stock_status(self) -> str:
-        """Return a simple human-friendly status based on the stock quantity."""
-        return "in_stock" if self.quantity and self.quantity > 0 else "out_of_stock"

@@ -14,7 +14,7 @@ def _build_session() -> Session:
     return Session(bind=engine)
 
 
-def test_create_product_persists_product_and_calculates_stock_status() -> None:
+def test_create_product_persists_product_record() -> None:
     with _build_session() as db:
         payload = ProductCreate(
             name="API Testing Fundamentals",
@@ -22,7 +22,6 @@ def test_create_product_persists_product_and_calculates_stock_status() -> None:
                 "Hands-on course covering API testing principles and "
                 "practical workflows"
             ),
-            quantity=5,
             category="QA Courses",
             price=Decimal("89.99"),
         )
@@ -31,8 +30,8 @@ def test_create_product_persists_product_and_calculates_stock_status() -> None:
 
         assert created.id is not None
         assert created.name == "API Testing Fundamentals"
-        assert created.quantity == 5
-        assert created.stock_status == "in_stock"
+        assert created.category == "QA Courses"
+        assert created.price == Decimal("89.99")
 
 
 def test_list_products_returns_ordered_rows_and_get_product_by_id_finds_record() -> (
@@ -42,14 +41,12 @@ def test_list_products_returns_ordered_rows_and_get_product_by_id_finds_record()
         first = Product(
             name="API Testing Fundamentals",
             description="First course",
-            quantity=2,
             category="QA Courses",
             price=Decimal("49.99"),
         )
         second = Product(
             name="Playwright Automation",
             description="Second course",
-            quantity=0,
             category="Automation",
             price=Decimal("79.99"),
         )

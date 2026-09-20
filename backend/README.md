@@ -34,11 +34,11 @@ which makes the backend easier to read and extend.
 ### Model layer
 
 The model classes define table mapping and the database invariants.
-For example, product constraints include:
+For the current product concept, the relevant constraints are:
 
-- quantity cannot be negative
 - price must be positive
-- stock status is derived from product quantity
+- catalog entries store course metadata and pricing information
+- inventory-level fields are not part of the approved product contract
 
 ### Schema layer
 

@@ -44,7 +44,6 @@ def test_create_product_contract(client: TestClient) -> None:
         "description": (
             "Hands-on course covering API testing principles and practical workflows"
         ),
-        "quantity": 5,
         "category": "QA Courses",
         "price": 89.99,
     }
@@ -55,10 +54,8 @@ def test_create_product_contract(client: TestClient) -> None:
     body = response.json()
     assert body["name"] == payload["name"]
     assert body["description"] == payload["description"]
-    assert body["quantity"] == payload["quantity"]
     assert body["category"] == payload["category"]
     assert body["price"] == "89.99"
-    assert body["stock_status"] == "in_stock"
     assert "id" in body
 
 
@@ -66,7 +63,6 @@ def test_get_products_contract(client: TestClient) -> None:
     payload = {
         "name": "Playwright Automation",
         "description": "Automation course for browser and API validation",
-        "quantity": 3,
         "category": "Automation",
         "price": 79.99,
     }
@@ -80,6 +76,7 @@ def test_get_products_contract(client: TestClient) -> None:
     products = response.json()
     assert len(products) >= 1
     assert any(item["id"] == product_id for item in products)
+    assert all("stock_status" not in item for item in products)
 
 
 def test_missing_product_contract(client: TestClient) -> None:

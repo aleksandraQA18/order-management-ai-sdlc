@@ -23,13 +23,8 @@ def upgrade() -> None:
         sa.Column("id", sa.Uuid(), nullable=False),
         sa.Column("name", sa.String(), nullable=False),
         sa.Column("description", sa.String(), nullable=False),
-        sa.Column("quantity", sa.Integer(), nullable=False, server_default="0"),
         sa.Column("category", sa.String(), nullable=False),
         sa.Column("price", sa.Numeric(12, 2), nullable=False),
-        sa.CheckConstraint(
-            "quantity >= 0",
-            name="ck_products_quantity_non_negative",
-        ),
         sa.CheckConstraint("price > 0", name="ck_products_price_positive"),
         sa.PrimaryKeyConstraint("id"),
     )
